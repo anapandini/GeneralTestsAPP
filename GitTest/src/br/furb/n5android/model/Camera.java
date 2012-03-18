@@ -29,7 +29,7 @@ public class Camera extends Ponto {
 		this.angle = 180;
 		far = 0.6f;
 		abertura = 10;
-		this.passo = 30f;
+		this.passo = 0.1f;
 		// this.selecionado = false; TODO remover
 
 		this.gl = gl;

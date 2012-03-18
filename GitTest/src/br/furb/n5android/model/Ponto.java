@@ -16,17 +16,19 @@ public class Ponto {
 
 	private float x;
 	private float y;
+	private float pointCoords[];
 
 	public Ponto(float x, float y, Sala sala) {
 		this.x = x;
 		this.y = y;
 
-		float pointCoords[] = { x, y, 0 };
+		pointCoords = new float[] { x, y, 0 };
 
 		// (# of coordinate values * 4 bytes per float)
 		ByteBuffer vbb = ByteBuffer.allocateDirect(pointCoords.length * 4);
 		vbb.order(ByteOrder.nativeOrder()); // use the device hardware's native byte order
 		coords = vbb.asFloatBuffer(); // create a floating point buffer from the ByteBuffer
+		coords.mark();
 		coords.put(pointCoords); // add the coordinates to the FloatBuffer
 		coords.position(0); // set the buffer to read the first coordinate
 	}
@@ -42,6 +44,11 @@ public class Ponto {
 
 	public void setX(float x) {
 		this.x = x;
+		this.pointCoords[0] = this.x;
+		this.coords.reset();
+		this.coords.mark();
+		this.coords.put(pointCoords);
+		this.coords.position(0);
 	}
 
 	public float getX() {
@@ -50,6 +57,11 @@ public class Ponto {
 
 	public void setY(float y) {
 		this.y = y;
+		this.pointCoords[1] = this.y;
+		this.coords.reset();
+		this.coords.mark();
+		this.coords.put(pointCoords);
+		this.coords.position(0);
 	}
 
 	public float getY() {
