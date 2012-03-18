@@ -19,7 +19,7 @@ public class WayPoint extends Ponto {
 		if (reached) {
 			GLES10.glColor4f(1f, 0f, 0f, 1f);
 		} else {
-			GLES10.glColor4f(1f, 0f, 1f, 1.0f);
+			GLES10.glColor4f(0f, 1f, 0f, 1.0f);
 		}
 		gl.glPointSize(5f);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);

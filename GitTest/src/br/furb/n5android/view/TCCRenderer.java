@@ -38,13 +38,15 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		// GLU.gluOrtho2D(gl, 0, largura, 0, altura);
 		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
+		camera.atualizar();
 		for (Sala sala : salas.values()) {
 			sala.desenhar();
 		}
 		for (WayPoint wp : wayPoints) {
+			boolean r = camera.canReach(wp);
+			wp.setReached(r);
 			wp.desenhar();
 		}
-		camera.atualizar();
 	}
 
 	@Override
