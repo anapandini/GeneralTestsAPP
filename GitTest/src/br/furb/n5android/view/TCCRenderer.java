@@ -36,8 +36,8 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		GLES10.glClear(GLES10.GL_COLOR_BUFFER_BIT | GLES10.GL_DEPTH_BUFFER_BIT);
 
 		// Set GL_MODELVIEW transformation mode
-		// gl.glMatrixMode(GL10.GL_MODELVIEW); // TODO
-		// gl.glLoadIdentity(); // reset the matrix to its default state // TODO
+		gl.glMatrixMode(GL10.GL_MODELVIEW); // TODO
+		gl.glLoadIdentity(); // reset the matrix to its default state // TODO
 
 		// TODO
 		// Método vindo de:
@@ -45,7 +45,7 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		// GLU.gluUnProject(300, 290, 0, currentModelViewMatrix, offSetWhereTheProjectMatrixDataStarts, currentProjectionMatrix, offsetWhereProjectMatrixDataStarts, new int[] { 300, 290, width, height }, 0, outPut, 0);
 
 		// When using GL_MODELVIEW, you must set the view point
-		// GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f); // TODO
+		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f); // TODO
 
 		// No N5 está assim:
 		// gl.glClear(GL.GL_COLOR_BUFFER_BIT);
@@ -56,8 +56,13 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		// glu.gluOrtho2D(400.0f, -400.0f, 400.0f, -400.0f);
 		metadeLargura = largura / 2;
 		metadeAltura = altura / 2;
-		GLU.gluOrtho2D(gl, metadeLargura, -metadeLargura, metadeAltura, -metadeAltura);
-		gl.glPushMatrix();
+
+		//gl.glMatrixMode(GL10.GL_MODELVIEW);
+		// gl.glLoadIdentity();
+		// GLU.gluOrtho2D(gl, -largura, largura, -altura, altura);
+		// GLU.gluLookAt(gl, 0, 0, -1, 0, 0, 1, 0, 1f, 0); // TODO aqui determina onde está olhando.
+		// TODO Preciso descobrir como colocar esse LookAt com os parâmetros corretos.
+		// gl.glPushMatrix();
 		//
 		// drawMap();
 		//
@@ -76,7 +81,7 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 			wp.desenhar();
 		}
 		camera.atualizar();
-		gl.glPopMatrix();
+		// gl.glPopMatrix();
 
 		// Desenha um ponto no canto da tela para ser o controle de selação do personagem
 		// TODO Estou fazendo assim pois não estou conseguindo descobrir como traduzir as coordenadas da tela para coordenadas do OpenGL ES 1.0
@@ -87,15 +92,20 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		GLES10.glViewport(0, 0, width, height);
+		// gl.glFrustumf(metadeLargura, -metadeLargura, metadeAltura, -metadeAltura, 0, 50);
 
 		this.altura = height;
 		this.largura = width;
 
+		gl.glMatrixMode(GL10.GL_MODELVIEW);
+		gl.glLoadIdentity();
+		// GLU.gluOrtho2D(gl, metadeLargura, -metadeLargura, metadeAltura, -metadeAltura);
+
 		// Faz ajustes para a proporção da tela
-		// float ratio = (float) width / height; // TODO
-		// gl.glMatrixMode(GL10.GL_PROJECTION); // set matrix to projection mode
-		// gl.glLoadIdentity(); // reset the matrix to its default state
-		// gl.glFrustumf(-ratio, ratio, -1, 1, 3, 7); // apply the projection matrix
+		float ratio = (float) width / height; // TODO
+		gl.glMatrixMode(GL10.GL_PROJECTION); // set matrix to projection mode
+		gl.glLoadIdentity(); // reset the matrix to its default state
+		gl.glFrustumf(-ratio, ratio, -1, 1, 3, 7); // apply the projection matrix
 
 	}
 
@@ -105,7 +115,7 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		GLES10.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 		this.gl = gl;
-		camera = new Camera(metadeLargura, metadeAltura, gl, null); // TODO IMPORTANTE Aqui deve ser passada a sala correta por parâmetro
+		camera = new Camera(largura, altura, gl, null); // TODO IMPORTANTE Aqui deve ser passada a sala correta por parâmetro
 		initWayPoints();
 		initSalas();
 	}
@@ -143,36 +153,36 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		// sala2.addDivisao(div);
 		// div = new Divisao(new Ponto(0, -0.76f, sala2), new Ponto(0, 0.24f, sala2), TipoDivisao.PORTAL);
 		// salas.put(sala2.getIdentificadorSala(), sala2);
-		
+
 		Sala sala1 = new Sala(1, gl);
-		Divisao div = new Divisao(new Ponto(metadeLargura, altura, sala1), new Ponto(0, altura, sala1), TipoDivisao.PAREDE);
+		Divisao div = new Divisao(new Ponto(0, 0, sala1), new Ponto(0, metadeAltura, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(-1f, 1f, sala1), new Ponto(0, 1f, sala1), TipoDivisao.PAREDE);
+		div = new Divisao(new Ponto(0, altura, sala1), new Ponto(0, 0, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(-1f, 1f, sala1), new Ponto(-1f, -1f, sala1), TipoDivisao.PAREDE);
+		div = new Divisao(new Ponto(0, 0, sala1), new Ponto(metadeLargura, 0, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(-1f, -1f, sala1), new Ponto(0, -1f, sala1), TipoDivisao.PAREDE);
+		div = new Divisao(new Ponto(metadeLargura, 0, sala1), new Ponto(metadeLargura, metadeAltura - 10, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(0, -1f, sala1), new Ponto(0, -0.75f, sala1), TipoDivisao.PAREDE);
+		div = new Divisao(new Ponto(metadeLargura, metadeAltura + 10, sala1), new Ponto(metadeLargura, altura, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(0, -0.76f, sala1), new Ponto(0, 0.24f, sala1), TipoDivisao.PORTAL);
+		div = new Divisao(new Ponto(metadeLargura, metadeLargura - 9, sala1), new Ponto(metadeLargura, metadeLargura + 9, sala1), TipoDivisao.PORTAL);
 		sala1.addDivisao(div);
 		salas.put(sala1.getIdentificadorSala(), sala1);
 		// Sala2
-		Sala sala2 = new Sala(2, gl);
-		div = new Divisao(new Ponto(0, 0.25f, sala2), new Ponto(0, 1f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(0, 1f, sala2), new Ponto(1f, 1f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(1f, 1f, sala2), new Ponto(1f, -1f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(1f, -1f, sala2), new Ponto(0, -1f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(0, -1f, sala2), new Ponto(0, -0.75f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(0, -0.76f, sala2), new Ponto(0, 0.24f, sala2), TipoDivisao.PORTAL);
-		salas.put(sala2.getIdentificadorSala(), sala2);
-		
+		// Sala sala2 = new Sala(2, gl);
+		// div = new Divisao(new Ponto(0, 0.25f, sala2), new Ponto(0, 1f, sala2), TipoDivisao.PAREDE);
+		// sala2.addDivisao(div);
+		// div = new Divisao(new Ponto(0, 1f, sala2), new Ponto(1f, 1f, sala2), TipoDivisao.PAREDE);
+		// sala2.addDivisao(div);
+		// div = new Divisao(new Ponto(1f, 1f, sala2), new Ponto(1f, -1f, sala2), TipoDivisao.PAREDE);
+		// sala2.addDivisao(div);
+		// div = new Divisao(new Ponto(1f, -1f, sala2), new Ponto(0, -1f, sala2), TipoDivisao.PAREDE);
+		// sala2.addDivisao(div);
+		// div = new Divisao(new Ponto(0, -1f, sala2), new Ponto(0, -0.75f, sala2), TipoDivisao.PAREDE);
+		// sala2.addDivisao(div);
+		// div = new Divisao(new Ponto(0, -0.76f, sala2), new Ponto(0, 0.24f, sala2), TipoDivisao.PORTAL);
+		// salas.put(sala2.getIdentificadorSala(), sala2);
+
 		// fim ambiente
 	}
 
