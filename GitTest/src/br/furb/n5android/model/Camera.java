@@ -21,16 +21,13 @@ public class Camera extends Ponto {
 	private Ponto frustumRight;
 	private Ponto frustumLeft;
 
-	// private boolean selecionado; // TODO remover
-
 	public Camera(float x, float y, GL10 gl, Sala sala) {
 		super(x, y, sala);
 		// Valores inicias
 		this.angle = 180;
 		far = 0.6f;
 		abertura = 10;
-		this.passo = 0.1f;
-		// this.selecionado = false; TODO remover
+		this.passo = 0f;
 
 		this.gl = gl;
 	}
@@ -56,23 +53,27 @@ public class Camera extends Ponto {
 	}
 
 	public void atualizar() {
-		// TODO remover!
-		// if (this.selecionado) {
-		// gl.glColor4f(0f, 0f, 1f, 1f);
-		// }
 		gl.glColor4f(0f, 0f, 0f, 1f);
 		gl.glPointSize(15);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		float x = retornaX(angle, passo);
+		float y = retornaY(angle, passo);
+		gl.glRotatef(angle, 0, 0, 0);
+		gl.glTranslatef(x, y, 0);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, getCoords());
 		gl.glDrawArrays(GL10.GL_POINTS, 0, 1);
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-
 		frustum();
+		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+		//gl.glTranslatef(-x, -y, 0);
+		//gl.glRotatef(angle, 0, 0, 0);
 	}
 
 	public void andar() {
-		setX(retornaX(angle, passo));
-		setY(retornaY(angle, passo));
+		this.passo += 0.1f;
+	}
+
+	public void voltar() {
+		this.passo -= 0.1f;
 	}
 
 	public void frustum() {
@@ -92,10 +93,8 @@ public class Camera extends Ponto {
 		frustumCoords.position(0);
 
 		gl.glLineWidth(1.5f);
-		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, frustumCoords);
-		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 3);
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 3);
 
 		// TODO IMPORTANTE aqui, na hora de gravar a sala é necessário fazer a verificação de que sala o ponto está.
 		frustumOrigin = new Ponto(getX(), getY(), getSala()); // TODO esta sala pode não ser a correta
@@ -142,6 +141,8 @@ public class Camera extends Ponto {
 	}
 
 	public boolean canReach(WayPoint wayPoint) {
+		// TODO Há falhas neste método pois ele está utilizando ScanLine, e não tenho uma linha que está paralela a algum dos dois eixos para que ela funcione.
+
 		List<Ponto> points = new ArrayList<Ponto>();
 		points.add(frustumOrigin);
 		points.add(frustumRight);

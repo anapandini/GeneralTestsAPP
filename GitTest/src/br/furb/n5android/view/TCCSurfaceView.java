@@ -59,6 +59,8 @@ public class TCCSurfaceView extends GLSurfaceView {
 				// TODO documentar
 				if (xInicio < xFinal) {
 					renderer.andarPersonagem();
+				} else {
+					renderer.voltarPersonagem();
 				}
 			}
 

@@ -157,4 +157,8 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		this.camera.andar();
 	}
 
+	public void voltarPersonagem() {
+		this.camera.voltar();
+	}
+	
 }
