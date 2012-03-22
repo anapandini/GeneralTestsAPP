@@ -9,6 +9,7 @@ public class Sala {
 
 	private List<Divisao> divisoes;
 	private int identificadorSala;
+	private List<Divisao> portaisDaSala;
 
 	private GL10 gl; // TODO se funcionar com GLES10 pode ser removido
 
@@ -44,6 +45,19 @@ public class Sala {
 
 	public void addDivisao(Divisao divisao) {
 		this.divisoes.add(divisao);
+	}
+
+	// TODO Talvez este método não seja mais necessário. Avaliar.
+	public List<Divisao> getPortais() {
+		if (portaisDaSala == null) {
+			portaisDaSala = new ArrayList<Divisao>();
+			for (Divisao div : divisoes) {
+				if (div.getTipo() == TipoDivisao.PORTAL) {
+					portaisDaSala.add(div);
+				}
+			}
+		}
+		return portaisDaSala;
 	}
 
 }

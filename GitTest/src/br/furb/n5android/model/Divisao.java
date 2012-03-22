@@ -13,6 +13,9 @@ public class Divisao {
 	private TipoDivisao tipo;
 	private FloatBuffer coordenadasDivisao;
 
+	private Sala salaOrigem;
+	private Sala salaDestino;
+
 	public Divisao(Ponto origem, Ponto destino, TipoDivisao tipo) {
 		this.origem = origem;
 		this.destino = destino;
@@ -43,4 +46,20 @@ public class Divisao {
 		return tipo;
 	}
 
+	public Sala getSalaOrigem() {
+		return salaOrigem;
+	}
+
+	public void setSalaOrigem(Sala salaOrigem) {
+		this.salaOrigem = salaOrigem;
+	}
+
+	public Sala getSalaDestino() {
+		return salaDestino;
+	}
+
+	public void setSalaDestino(Sala salaDestino) {
+		this.salaDestino = salaDestino;
+	}
+	
 }

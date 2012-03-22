@@ -10,7 +10,7 @@ import android.opengl.GLES10;
 
 public class Ponto {
 
-	private Sala sala;
+	protected Sala sala;
 
 	private FloatBuffer coords;
 
@@ -21,6 +21,7 @@ public class Ponto {
 	public Ponto(float x, float y, Sala sala) {
 		this.x = x;
 		this.y = y;
+		this.sala = sala;
 
 		pointCoords = new float[] { x, y, 0 };
 

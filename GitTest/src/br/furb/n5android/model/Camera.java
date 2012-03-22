@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.util.Log;
+
 public class Camera extends Ponto {
 
 	private int angle;
@@ -65,8 +67,58 @@ public class Camera extends Ponto {
 	}
 
 	public void andar() {
-		setX(retornaX(angle, passo));
-		setY(retornaY(angle, passo));
+		float novoX = retornaX(angle, passo);
+		float novoY = retornaY(angle, passo);
+
+		boolean podeAndar = true;
+		for (Divisao div : getSala().getDivisoes()) {
+			// TODO necessário documentar este trecho de código
+			if (intesercta(this, new Ponto(novoX, novoY, null), div.getOrigem(), div.getDestino())) {
+				if (div.getTipo() == TipoDivisao.PORTAL) {
+					if (div.getSalaOrigem().getIdentificadorSala() == this.getSala().getIdentificadorSala()) {
+						setSala(div.getSalaDestino());
+					} else {
+						setSala(div.getSalaOrigem());
+					}
+					Log.d("tcc", String.valueOf(getSala().getIdentificadorSala()));
+				} else {
+					Log.d("tcc", "Colidindo com a parede");
+					// Não deixa andar pois é parede
+					podeAndar = false;
+				}
+				break;
+			}
+		}
+		// TODO o código abaixo está tratando a troca de portais.
+		// Porém também é necessário tratar a colisão com las pareditas.
+		// for (Divisao portal : getSala().getPortais()) {
+		// if (intesercta(this, new Ponto(novoX, novoY, null), portal.getOrigem(), portal.getDestino())) {
+		// // TODO documentar o motivo deste if/else
+		// if (portal.getSalaOrigem().getIdentificadorSala() == this.getSala().getIdentificadorSala()) {
+		// setSala(portal.getSalaDestino());
+		// } else {
+		// setSala(portal.getSalaOrigem());
+		// }
+		// Log.d("tcc", String.valueOf(getSala().getIdentificadorSala()));
+		// break;
+		// }
+		// }
+		// TODO fim
+		if (podeAndar) {
+			setX(novoX);
+			setY(novoY);
+		}
+	}
+
+	private boolean intesercta(Ponto k, Ponto l, Ponto m, Ponto n) {
+		// Fonte: http://www.inf.pucrs.br/~pinho/CG/Aulas/OpenGL/Interseccao/CalcIntersec.html
+		// Funciona para determinar a intersecção entre duas retas, e não dois segmentos de retas.
+		double det = (n.getX() - m.getX()) * (l.getY() - k.getY()) - (n.getY() - m.getY()) * (l.getX() - k.getX());
+		if (det == 0.0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public void frustum() {
@@ -168,9 +220,10 @@ public class Camera extends Ponto {
 		return false;
 	}
 
-	// TODO remover
-	// public void seleciona() {
-	// this.selecionado = !this.selecionado;
-	// }
+	public void setSala(Sala novaSala) {
+		// Método presente apenas na câmera pois ela que se movimenta pelo cenário.
+		this.sala = novaSala;
+	}
+
 
 }

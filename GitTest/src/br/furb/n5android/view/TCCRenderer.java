@@ -70,9 +70,9 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		// gl.glEnableClientState(GL10.GL_VERTEX_ARRAY); // TODO Colocando esta diretiva aqui, não é necessário que todos os métodos de desenho liguem ela
 
 		this.gl = gl;
-		camera = new Camera(0f, 0f, gl, null); // TODO IMPORTANTE Aqui deve ser passada a sala correta por parâmetro
-		initWayPoints();
 		initSalas();
+		initWayPoints();
+		camera = new Camera(-0.1f, -0.1f, gl, salas.get(1)); // TODO IMPORTANTE Aqui deve ser passada a sala correta por parâmetro
 	}
 
 	private void initSalas() {
@@ -81,33 +81,37 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		// Ambiente com duas salas e um portal
 		// Sala1
 		Sala sala1 = new Sala(1, gl);
-		Divisao div = new Divisao(new Ponto(0, 0.25f, sala1), new Ponto(0, 1f, sala1), TipoDivisao.PAREDE);
-		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(-1f, 1f, sala1), new Ponto(0, 1f, sala1), TipoDivisao.PAREDE);
-		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(-1f, 1f, sala1), new Ponto(-1f, -1f, sala1), TipoDivisao.PAREDE);
-		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(-1f, -1f, sala1), new Ponto(0, -1f, sala1), TipoDivisao.PAREDE);
-		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(0, -1f, sala1), new Ponto(0, -0.75f, sala1), TipoDivisao.PAREDE);
-		sala1.addDivisao(div);
-		div = new Divisao(new Ponto(0, -0.76f, sala1), new Ponto(0, 0.24f, sala1), TipoDivisao.PORTAL);
-		sala1.addDivisao(div);
+		Divisao div1 = new Divisao(new Ponto(0, 0.25f, sala1), new Ponto(0, 1f, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		div1 = new Divisao(new Ponto(-1f, 1f, sala1), new Ponto(0, 1f, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		div1 = new Divisao(new Ponto(-1f, 1f, sala1), new Ponto(-1f, -1f, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		div1 = new Divisao(new Ponto(-1f, -1f, sala1), new Ponto(0, -1f, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		div1 = new Divisao(new Ponto(0, -1f, sala1), new Ponto(0, -0.75f, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		div1 = new Divisao(new Ponto(0, -0.76f, sala1), new Ponto(0, 0.24f, sala1), TipoDivisao.PORTAL);
+		div1.setSalaOrigem(sala1);
+		sala1.addDivisao(div1);
 		salas.put(sala1.getIdentificadorSala(), sala1);
 		// Sala2
 		Sala sala2 = new Sala(2, gl);
-		div = new Divisao(new Ponto(0, 0.25f, sala2), new Ponto(0, 1f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(0, 1f, sala2), new Ponto(1f, 1f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(1f, 1f, sala2), new Ponto(1f, -1f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(1f, -1f, sala2), new Ponto(0, -1f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(0, -1f, sala2), new Ponto(0, -0.75f, sala2), TipoDivisao.PAREDE);
-		sala2.addDivisao(div);
-		div = new Divisao(new Ponto(0, -0.76f, sala2), new Ponto(0, 0.24f, sala2), TipoDivisao.PORTAL);
+		Divisao div2 = new Divisao(new Ponto(0, 0.25f, sala2), new Ponto(0, 1f, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		div2 = new Divisao(new Ponto(0, 1f, sala2), new Ponto(1f, 1f, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		div2 = new Divisao(new Ponto(1f, 1f, sala2), new Ponto(1f, -1f, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		div2 = new Divisao(new Ponto(1f, -1f, sala2), new Ponto(0, -1f, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		div2 = new Divisao(new Ponto(0, -1f, sala2), new Ponto(0, -0.75f, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		div2 = new Divisao(new Ponto(0, -0.76f, sala2), new Ponto(0, 0.24f, sala2), TipoDivisao.PORTAL);
+		div2.setSalaOrigem(sala2);
+		div2.setSalaDestino(sala1);
 		salas.put(sala2.getIdentificadorSala(), sala2);
+		div1.setSalaDestino(sala2);
 		// fim ambiente
 	}
 
