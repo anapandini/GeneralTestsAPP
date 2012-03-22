@@ -58,11 +58,11 @@ public class Camera extends Ponto {
 		gl.glColor4f(0f, 0f, 0f, 1f);
 		gl.glPointSize(15);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glPushMatrix();
-		gl.glTranslatef(getX(), getY(), 0);
+		// gl.glPushMatrix(); TODO Remover
+		// gl.glTranslatef(getX(), getY(), 0); TODO Remover
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, getCoords());
 		gl.glDrawArrays(GL10.GL_POINTS, 0, 1);
-		gl.glPopMatrix();
+		// gl.glPopMatrix(); TODO Remover
 		frustum();
 	}
 
@@ -89,36 +89,31 @@ public class Camera extends Ponto {
 				break;
 			}
 		}
-		// TODO o código abaixo está tratando a troca de portais.
-		// Porém também é necessário tratar a colisão com las pareditas.
-		// for (Divisao portal : getSala().getPortais()) {
-		// if (intesercta(this, new Ponto(novoX, novoY, null), portal.getOrigem(), portal.getDestino())) {
-		// // TODO documentar o motivo deste if/else
-		// if (portal.getSalaOrigem().getIdentificadorSala() == this.getSala().getIdentificadorSala()) {
-		// setSala(portal.getSalaDestino());
-		// } else {
-		// setSala(portal.getSalaOrigem());
-		// }
-		// Log.d("tcc", String.valueOf(getSala().getIdentificadorSala()));
-		// break;
-		// }
-		// }
-		// TODO fim
 		if (podeAndar) {
 			setX(novoX);
 			setY(novoY);
 		}
 	}
 
-	private boolean intesercta(Ponto k, Ponto l, Ponto m, Ponto n) {
-		// Fonte: http://www.inf.pucrs.br/~pinho/CG/Aulas/OpenGL/Interseccao/CalcIntersec.html
-		// Funciona para determinar a intersecção entre duas retas, e não dois segmentos de retas.
-		double det = (n.getX() - m.getX()) * (l.getY() - k.getY()) - (n.getY() - m.getY()) * (l.getX() - k.getX());
-		if (det == 0.0) {
-			return false;
+	private boolean intesercta(Ponto a, Ponto b, Ponto c, Ponto d) {
+		// TODO Documentar o funcionamento/propósito do método
+		// Fonte: http://www2.inatel.br/docentes/rosanna/cursos/C421-C_20072/AG2.pdf
+		double x1, x2, x3, x4, y1, y2, y3, y4;
+		x1 = Math.min(a.getX(), b.getX());
+		x2 = Math.max(a.getX(), b.getX());
+		y1 = Math.min(a.getY(), b.getY());
+		y2 = Math.max(a.getY(), b.getY());
+
+		x3 = Math.min(c.getX(), d.getX());
+		x4 = Math.max(c.getX(), d.getX());
+		y3 = Math.min(c.getY(), d.getY());
+		y4 = Math.max(c.getY(), d.getY());
+
+		if ((x2 >= x3) && (x4 >= x1) && (y2 >= y3) && (y4 >= y1)) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	public void frustum() {
@@ -224,6 +219,5 @@ public class Camera extends Ponto {
 		// Método presente apenas na câmera pois ela que se movimenta pelo cenário.
 		this.sala = novaSala;
 	}
-
 
 }

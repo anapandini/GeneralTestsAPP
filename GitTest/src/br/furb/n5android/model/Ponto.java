@@ -45,11 +45,11 @@ public class Ponto {
 
 	public void setX(float x) {
 		this.x = x;
-		// this.pointCoords[0] = this.x;
-		// this.coords.reset();
-		// this.coords.mark();
-		// this.coords.put(pointCoords);
-		// this.coords.position(0);
+		this.pointCoords[0] = this.x;
+		this.coords.reset();
+		this.coords.mark();
+		this.coords.put(pointCoords);
+		this.coords.position(0);
 	}
 
 	public float getX() {
@@ -58,11 +58,11 @@ public class Ponto {
 
 	public void setY(float y) {
 		this.y = y;
-		// this.pointCoords[1] = this.y;
-		// this.coords.reset();
-		// this.coords.mark();
-		// this.coords.put(pointCoords);
-		// this.coords.position(0);
+		this.pointCoords[1] = this.y;
+		this.coords.reset();
+		this.coords.mark();
+		this.coords.put(pointCoords);
+		this.coords.position(0);
 	}
 
 	public float getY() {
