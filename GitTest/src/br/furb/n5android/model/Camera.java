@@ -3,8 +3,6 @@ package br.furb.n5android.model;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -183,36 +181,49 @@ public class Camera extends Ponto {
 	}
 
 	public boolean canReach(WayPoint wayPoint) {
-		// TODO Há falhas neste método pois ele está utilizando ScanLine, e não tenho uma linha que está paralela a algum dos dois eixos para que ela funcione.
+		// // TODO Há falhas neste método pois ele está utilizando ScanLine, e não tenho uma linha que está paralela a algum dos dois eixos para que ela funcione.
+		// List<Ponto> points = new ArrayList<Ponto>();
+		// points.add(frustumOrigin);
+		// points.add(frustumRight);
+		// points.add(frustumLeft);
+		// int n = 0;
+		// for (int i = 0; i < points.size() - 1; i++) {
+		// if (points.get(i).getY() != points.get(i + 1).getY()) {
+		// // minha aresta é meu ponto atual e o proximo ponto
+		// float ti = (wayPoint.getY() - points.get(i).getY()) / (points.get(i + 1).getY() - points.get(i).getY());
+		// // x ponto interseccao
+		// float xInt = points.get(i).getX() + (points.get(i + 1).getX() - points.get(i).getX()) * ti;
+		// // y ponto interseccao
+		// float yInt = wayPoint.getY();
+		// Ponto pInt = new Ponto(xInt, yInt, getSala()); // TODO esta sala pode não ser a correta
+		// if (pInt.getX() == wayPoint.getX()) {
+		// break;
+		// } else if ((pInt.getX() > wayPoint.getX()) && (pInt.getY() > Math.min(points.get(i).getY(), points.get(i + 1).getY())) && (pInt.getY() <= Math.max(points.get(i).getY(), points.get(i + 1).getY()))) {
+		// n++;
+		// }
+		// } else if ((wayPoint.getY() == points.get(i).getY()) && (wayPoint.getX() >= Math.min(points.get(i).getX(), points.get(i + 1).getX())) && wayPoint.getX() <= Math.max(points.get(i).getX(), points.get(i + 1).getX())) {
+		// break;
+		// }
+		// }
+		// if (n % 2 != 0) {
+		// return true;
+		// }
+		//
+		// return false;
 
-		List<Ponto> points = new ArrayList<Ponto>();
-		points.add(frustumOrigin);
-		points.add(frustumRight);
-		points.add(frustumLeft);
-		int n = 0;
-		for (int i = 0; i < points.size() - 1; i++) {
-			if (points.get(i).getY() != points.get(i + 1).getY()) {
-				// minha aresta é meu ponto atual e o proximo ponto
-				float ti = (wayPoint.getY() - points.get(i).getY()) / (points.get(i + 1).getY() - points.get(i).getY());
-				// x ponto interseccao
-				float xInt = points.get(i).getX() + (points.get(i + 1).getX() - points.get(i).getX()) * ti;
-				// y ponto interseccao
-				float yInt = wayPoint.getY();
-				Ponto pInt = new Ponto(xInt, yInt, getSala()); // TODO esta sala pode não ser a correta
-				if (pInt.getX() == wayPoint.getX()) {
-					break;
-				} else if ((pInt.getX() > wayPoint.getX()) && (pInt.getY() > Math.min(points.get(i).getY(), points.get(i + 1).getY())) && (pInt.getY() <= Math.max(points.get(i).getY(), points.get(i + 1).getY()))) {
-					n++;
-				}
-			} else if ((wayPoint.getY() == points.get(i).getY()) && (wayPoint.getX() >= Math.min(points.get(i).getX(), points.get(i + 1).getX())) && wayPoint.getX() <= Math.max(points.get(i).getX(), points.get(i + 1).getX())) {
-				break;
-			}
-		}
-		if (n % 2 != 0) {
-			return true;
-		}
+		// Fonte: http://www.inf.unioeste.br/~rogerio/Geometria-Triangulos.pdf
+		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
+		double areaOLR = areaTriangulo(frustumOrigin, frustumLeft, frustumRight);
+		double areaOLW = areaTriangulo(frustumOrigin, frustumLeft, wayPoint);
+		double areaORW = areaTriangulo(frustumOrigin, frustumRight, wayPoint);
+		double areaLRW = areaTriangulo(frustumLeft, frustumRight, wayPoint);
 
-		return false;
+		return areaOLR == (areaOLW + areaORW + areaLRW);
+	}
+
+	private double areaTriangulo(Ponto a, Ponto b, Ponto c) {
+		double area = 0.5 * (((a.getX() * b.getY()) - (a.getY() * b.getX())) + ((a.getY() * c.getX()) - (a.getX() * c.getY())) + ((b.getX() * c.getY()) - (b.getY() * c.getX())));
+		return Math.abs(area);
 	}
 
 	public void setSala(Sala novaSala) {

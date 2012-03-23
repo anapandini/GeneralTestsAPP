@@ -94,7 +94,6 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		div1 = new Divisao(new Ponto(0, -0.76f, sala1), new Ponto(0, 0.24f, sala1), TipoDivisao.PORTAL);
 		div1.setSalaOrigem(sala1);
 		sala1.addDivisao(div1);
-		salas.put(sala1.getIdentificadorSala(), sala1);
 		// Sala2
 		Sala sala2 = new Sala(2, gl);
 		Divisao div2 = new Divisao(new Ponto(0, 0.25f, sala2), new Ponto(0, 1f, sala2), TipoDivisao.PAREDE);
@@ -108,10 +107,12 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		div2 = new Divisao(new Ponto(0, -1f, sala2), new Ponto(0, -0.75f, sala2), TipoDivisao.PAREDE);
 		sala2.addDivisao(div2);
 		div2 = new Divisao(new Ponto(0, -0.76f, sala2), new Ponto(0, 0.24f, sala2), TipoDivisao.PORTAL);
+		sala2.addDivisao(div2);
 		div2.setSalaOrigem(sala2);
 		div2.setSalaDestino(sala1);
-		salas.put(sala2.getIdentificadorSala(), sala2);
 		div1.setSalaDestino(sala2);
+		salas.put(sala1.getIdentificadorSala(), sala1);
+		salas.put(sala2.getIdentificadorSala(), sala2);
 		// fim ambiente
 	}
 
