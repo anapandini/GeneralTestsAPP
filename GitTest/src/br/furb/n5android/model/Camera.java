@@ -211,7 +211,7 @@ public class Camera extends Ponto {
 		//
 		// return false;
 
-		// Fonte: http://www.inf.unioeste.br/~rogerio/Geometria-Triangulos.pdf
+		// Fonte: ???
 		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
 		double areaOLR = areaTriangulo(frustumOrigin, frustumLeft, frustumRight);
 		double areaOLW = areaTriangulo(frustumOrigin, frustumLeft, wayPoint);
@@ -222,6 +222,7 @@ public class Camera extends Ponto {
 	}
 
 	private double areaTriangulo(Ponto a, Ponto b, Ponto c) {
+		// Fonte: http://www.inf.unioeste.br/~rogerio/Geometria-Triangulos.pdf
 		double area = 0.5 * (((a.getX() * b.getY()) - (a.getY() * b.getX())) + ((a.getY() * c.getX()) - (a.getX() * c.getY())) + ((b.getX() * c.getY()) - (b.getY() * c.getX())));
 		return Math.abs(area);
 	}

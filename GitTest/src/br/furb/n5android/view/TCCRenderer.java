@@ -43,10 +43,14 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 			sala.desenhar();
 		}
 		for (WayPoint wp : wayPoints) {
-			boolean r = camera.canReach(wp);
-			wp.setReached(r);
-			wp.desenhar();
+			// TODO aqui pode ser utilizada uma abordagem que não necessite ainda fazer um loop sobre todos os waypoints, e fazer loop só nos da sala primeiro
+			if (wp.getSala().getIdentificadorSala() == camera.getSala().getIdentificadorSala()) {
+				boolean r = camera.canReach(wp);
+				wp.setReached(r);
+				wp.desenhar();
+			}
 		}
+		// TODO aqui deve então ver se o frustum está passando por algum portal/parede para recalculado
 	}
 
 	@Override
@@ -124,10 +128,10 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 	private void initWayPoints() {
 		this.wayPoints = new ArrayList<WayPoint>();
 		// TODO IMPORTANTE Aqui deve ser passada a sala correta por parâmetro
-		this.wayPoints.add(new WayPoint(-0.5f, -0.25f, gl, null));
-		this.wayPoints.add(new WayPoint(0.9f, 0.9f, gl, null));
-		this.wayPoints.add(new WayPoint(0.2f, 0.2f, gl, null));
-		this.wayPoints.add(new WayPoint(-0.8f, -0.75f, gl, null));
+		this.wayPoints.add(new WayPoint(-0.5f, -0.25f, gl, salas.get(1)));
+		this.wayPoints.add(new WayPoint(0.9f, 0.9f, gl, salas.get(2)));
+		this.wayPoints.add(new WayPoint(0.2f, 0.2f, gl, salas.get(2)));
+		this.wayPoints.add(new WayPoint(-0.8f, -0.75f, gl, salas.get(1)));
 	}
 
 	// public void aumentaFar() {
