@@ -1,4 +1,4 @@
-package br.furb.n5android.model;
+package br.furb.portal.api.model;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

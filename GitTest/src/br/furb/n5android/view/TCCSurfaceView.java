@@ -38,16 +38,6 @@ public class TCCSurfaceView extends GLSurfaceView {
 			// Sendo assim pego o que tiver a maior diferença, pois é mais provável que seja o movimento feito pelo usuário.
 			float diferencaY = Math.abs(yInicio - yFinal);
 			float diferencaX = Math.abs(xInicio - xFinal);
-
-			// if (diferencaY < 11 && diferencaX < 11) {
-			// // Significa que pode ter sido um movimento para selecionar o personagem
-			// // Verifica então se o toque foi perto da área onde o personagem está
-			// float[] coords = renderer.getPersonagemCoords();
-			// float diferencaXPersonagem = Math.abs(coords[0] - xFinal);
-			// float diferencaYPersonagem = Math.abs(coords[1] - yFinal);
-			// if (diferencaXPersonagem < 11 && diferencaYPersonagem < 11) {
-			// renderer.selecaoPersonagem();
-			// }
 			if (diferencaY > diferencaX) {
 				// TODO documentar
 				if (yInicio > yFinal) {
@@ -58,7 +48,7 @@ public class TCCSurfaceView extends GLSurfaceView {
 			} else {
 				// TODO documentar
 				if (xInicio < xFinal) {
-					renderer.andarPersonagem();
+					renderer.moverCamera();
 				}
 			}
 

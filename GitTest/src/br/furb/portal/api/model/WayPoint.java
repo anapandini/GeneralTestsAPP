@@ -1,4 +1,4 @@
-package br.furb.n5android.model;
+package br.furb.portal.api.model;
 
 import javax.microedition.khronos.opengles.GL10;
 
