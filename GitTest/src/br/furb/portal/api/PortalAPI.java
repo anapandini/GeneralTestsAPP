@@ -47,8 +47,8 @@ public class PortalAPI {
 			if (wp.getSala().getIdentificadorSala() == camera.getSala().getIdentificadorSala()) {
 				boolean r = camera.canReach(wp);
 				wp.setReached(r);
-				wp.desenhar();
 			}
+			wp.desenhar();
 		}
 		// TODO aqui deve então ver se o frustum está passando por algum portal/parede para recalculado
 	}
