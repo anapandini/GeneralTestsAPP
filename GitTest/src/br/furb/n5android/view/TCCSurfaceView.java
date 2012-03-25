@@ -17,7 +17,6 @@ public class TCCSurfaceView extends GLSurfaceView {
 
 		renderer = new TCCRenderer();
 		setRenderer(renderer);
-
 		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 	}
 
@@ -39,14 +38,12 @@ public class TCCSurfaceView extends GLSurfaceView {
 			float diferencaY = Math.abs(yInicio - yFinal);
 			float diferencaX = Math.abs(xInicio - xFinal);
 			if (diferencaY > diferencaX) {
-				// TODO documentar
 				if (yInicio > yFinal) {
 					renderer.rotacionaFrustumParaBaixo();
 				} else {
 					renderer.rotacionaFrustumParaCima();
 				}
 			} else {
-				// TODO documentar
 				if (xInicio < xFinal) {
 					renderer.moverCamera();
 				}

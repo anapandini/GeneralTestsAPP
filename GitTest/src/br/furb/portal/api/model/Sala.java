@@ -10,8 +10,7 @@ public class Sala {
 	private List<Divisao> divisoes;
 	private int identificadorSala;
 	private List<Divisao> portaisDaSala;
-
-	private GL10 gl; // TODO se funcionar com GLES10 pode ser removido
+	private GL10 gl;
 
 	public Sala(int identificadorSala, GL10 gl) {
 		this.divisoes = new ArrayList<Divisao>();

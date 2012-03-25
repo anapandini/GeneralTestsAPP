@@ -8,42 +8,17 @@ import br.furb.portal.api.PortalAPI_Utils;
 
 public class Camera extends Ponto {
 
-	// private float angle;
-	// private static float far;
-	// private static int abertura;
 	private float deslocamento;
-
-	private GL10 gl;
-
 	private Frustum frustum;
-
-	// private Ponto frustumOrigin;
-	// private Ponto frustumRight;
-	// private Ponto frustumLeft;
+	private GL10 gl;
 
 	public Camera(float x, float y, float taxaDeslocamento, float anguloInicial, float aberturaInicial, float farInicial, GL10 gl, Sala sala) {
 		super(x, y, sala);
-		// Valores inicias
-		// this.angle = anguloInicial;
-		// this.far = farInicial;
-		// this.abertura = aberturaInicial;
 		this.frustum = new Frustum(this, anguloInicial, aberturaInicial, farInicial, gl);
 		this.deslocamento = taxaDeslocamento;
 
 		this.gl = gl;
 	}
-
-	// public int getAngulo() {
-	// return frustum.getAngulo();
-	// }
-	//
-	// public void setAngulo(float angulo) {
-	// frustum.setAngulo(angulo);
-	// }
-
-	// public float getPasso() {
-	// return passo;
-	// }
 
 	public void atualizar() {
 		gl.glColor4f(0f, 0f, 0f, 1f);
@@ -57,52 +32,8 @@ public class Camera extends Ponto {
 		frustum.atualizar();
 	}
 
-	// public void setAbertura(int newAbertura) {
-	// if ((abertura <= 2 && newAbertura < 0) || (abertura >= 48 && newAbertura > 0)) {
-	// return;
-	// }
-	// abertura += newAbertura;
-	// }
-	//
-	// public void setFar(float newFar) {
-	// if (far <= 0.5f && newFar < 0) {
-	// return;
-	// }
-	// far += newFar;
-	// }
-
 	// TODO este método deveria estar na classe Frustum?
 	public boolean canReach(WayPoint wayPoint) {
-		// // TODO Há falhas neste método pois ele está utilizando ScanLine, e não tenho uma linha que está paralela a algum dos dois eixos para que ela funcione.
-		// List<Ponto> points = new ArrayList<Ponto>();
-		// points.add(frustumOrigin);
-		// points.add(frustumRight);
-		// points.add(frustumLeft);
-		// int n = 0;
-		// for (int i = 0; i < points.size() - 1; i++) {
-		// if (points.get(i).getY() != points.get(i + 1).getY()) {
-		// // minha aresta é meu ponto atual e o proximo ponto
-		// float ti = (wayPoint.getY() - points.get(i).getY()) / (points.get(i + 1).getY() - points.get(i).getY());
-		// // x ponto interseccao
-		// float xInt = points.get(i).getX() + (points.get(i + 1).getX() - points.get(i).getX()) * ti;
-		// // y ponto interseccao
-		// float yInt = wayPoint.getY();
-		// Ponto pInt = new Ponto(xInt, yInt, getSala()); // TODO esta sala pode não ser a correta
-		// if (pInt.getX() == wayPoint.getX()) {
-		// break;
-		// } else if ((pInt.getX() > wayPoint.getX()) && (pInt.getY() > Math.min(points.get(i).getY(), points.get(i + 1).getY())) && (pInt.getY() <= Math.max(points.get(i).getY(), points.get(i + 1).getY()))) {
-		// n++;
-		// }
-		// } else if ((wayPoint.getY() == points.get(i).getY()) && (wayPoint.getX() >= Math.min(points.get(i).getX(), points.get(i + 1).getX())) && wayPoint.getX() <= Math.max(points.get(i).getX(), points.get(i + 1).getX())) {
-		// break;
-		// }
-		// }
-		// if (n % 2 != 0) {
-		// return true;
-		// }
-		//
-		// return false;
-
 		// Fonte: ???
 		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
 		double areaOLR = areaTriangulo(frustum.getFrustumOrigin(), frustum.getFrustumLeft(), frustum.getFrustumRight());
@@ -128,10 +59,6 @@ public class Camera extends Ponto {
 		float novoXCamera = PortalAPI_Utils.retornaX(getX(), frustum.getAngulo(), deslocamento);
 		float novoYCamera = PortalAPI_Utils.retornaY(getY(), frustum.getAngulo(), deslocamento);
 
-		// TODO IMP
-		// deve chamar o método intersecta aqui
-		// TODO método misturado. Há coisas aqui que a API deveria estar fazendo
-		// Este método deve apenas calcular as coordenadas
 		boolean podeAndar = true;
 		for (Divisao div : getSala().getDivisoes()) {
 			// TODO necessário documentar este trecho de código

@@ -19,8 +19,6 @@ public class PortalAPI {
 
 	private GL10 gl;
 
-	// TODO classe também deverá guardar as informações do frustum
-
 	public PortalAPI(float xCamera, float yCamera, List<Sala> salas, int identificadorSalaCamera, float anguloInicial, float aberturaInicial, float farInicial, GL10 gl) {
 		this.salas = new HashMap<Integer, Sala>();
 		for (Sala s : salas) {
@@ -32,7 +30,6 @@ public class PortalAPI {
 		this.pontosInteresse = new ArrayList<WayPoint>();
 	}
 
-	// TODO como irá funcionar para movimentar a câmera?
 	public void deslocaCamera() {
 		camera.mover();
 	}

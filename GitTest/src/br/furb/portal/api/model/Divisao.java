@@ -6,8 +6,6 @@ import java.nio.FloatBuffer;
 
 public class Divisao {
 
-	// TODO verificar quais dos getters e setters são realmente necessários
-
 	private Ponto origem;
 	private Ponto destino;
 	private TipoDivisao tipo;
@@ -61,5 +59,5 @@ public class Divisao {
 	public void setSalaDestino(Sala salaDestino) {
 		this.salaDestino = salaDestino;
 	}
-	
+
 }

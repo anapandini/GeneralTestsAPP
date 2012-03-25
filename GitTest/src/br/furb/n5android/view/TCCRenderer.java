@@ -38,8 +38,6 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		GLES10.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-		// TODO Poderia ter um método que retornasse a sala de acordo com as coordenadas do ponto?
 		controle = new Controle(gl);
 	}
 

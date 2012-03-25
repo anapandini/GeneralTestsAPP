@@ -2,7 +2,6 @@ package br.furb.portal.api;
 
 public class PortalAPI_Utils {
 
-	// TODO ler sobre o modificador Protected
 	public static float retornaX(float xAtual, float angulo, float raio) {
 		return (float) (xAtual + (raio * Math.cos(Math.PI * angulo / 180.0)));
 	}

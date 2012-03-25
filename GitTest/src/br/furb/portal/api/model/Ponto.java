@@ -25,7 +25,7 @@ public class Ponto {
 
 		pointCoords = new float[] { x, y, 0 };
 
-		// (# of coordinate values * 4 bytes per float)
+		// TODO documentar em PT-BR (# of coordinate values * 4 bytes per float)
 		ByteBuffer vbb = ByteBuffer.allocateDirect(pointCoords.length * 4);
 		vbb.order(ByteOrder.nativeOrder()); // use the device hardware's native byte order
 		coords = vbb.asFloatBuffer(); // create a floating point buffer from the ByteBuffer
