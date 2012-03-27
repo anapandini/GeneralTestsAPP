@@ -93,4 +93,21 @@ public class Frustum {
 		}
 	}
 
+	public boolean canReach(WayPoint wayPoint) {
+		// Fonte: ???
+		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
+		double areaOLR = areaTriangulo(getFrustumOrigin(), getFrustumLeft(), getFrustumRight());
+		double areaOLW = areaTriangulo(getFrustumOrigin(), getFrustumLeft(), wayPoint);
+		double areaORW = areaTriangulo(getFrustumOrigin(), getFrustumRight(), wayPoint);
+		double areaLRW = areaTriangulo(getFrustumLeft(), getFrustumRight(), wayPoint);
+
+		return areaOLR == (areaOLW + areaORW + areaLRW);
+	}
+
+	private double areaTriangulo(Ponto a, Ponto b, Ponto c) {
+		// Fonte: http://www.inf.unioeste.br/~rogerio/Geometria-Triangulos.pdf
+		double area = 0.5 * (((a.getX() * b.getY()) - (a.getY() * b.getX())) + ((a.getY() * c.getX()) - (a.getX() * c.getY())) + ((b.getX() * c.getY()) - (b.getY() * c.getX())));
+		return Math.abs(area);
+	}
+
 }
