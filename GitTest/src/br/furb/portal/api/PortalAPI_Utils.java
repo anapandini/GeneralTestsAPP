@@ -1,5 +1,6 @@
 package br.furb.portal.api;
 
+import br.furb.portal.api.model.Frustum;
 import br.furb.portal.api.model.Ponto;
 
 public class PortalAPI_Utils {
@@ -63,7 +64,6 @@ public class PortalAPI_Utils {
 	}
 
 	private static boolean intesercta_reta(Ponto a, Ponto b, Ponto c, Ponto d) {
-		// TODO Documentar o funcionamento/propósito do método
 		// Fonte: http://www2.inatel.br/docentes/rosanna/cursos/C421-C_20072/AG2.pdf
 		double x1, x2, x3, x4, y1, y2, y3, y4;
 		x1 = Math.min(a.getX(), b.getX());
@@ -107,6 +107,29 @@ public class PortalAPI_Utils {
 
 	public static float retornaY(float yAtual, float angulo, float raio) {
 		return (float) (yAtual + (raio * Math.sin(Math.PI * angulo / 180.0)));
+	}
+
+	public static boolean canReach(Frustum frustum, Ponto ponto) {
+		// Fonte: ???
+		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
+		double areaOLR = areaTriangulo(frustum.getFrustumOrigin(), frustum.getFrustumLeft(), frustum.getFrustumRight());
+		double areaOLW = areaTriangulo(frustum.getFrustumOrigin(), frustum.getFrustumLeft(), ponto);
+		double areaORW = areaTriangulo(frustum.getFrustumOrigin(), frustum.getFrustumRight(), ponto);
+		double areaLRW = areaTriangulo(frustum.getFrustumLeft(), frustum.getFrustumRight(), ponto);
+
+		return (areaOLW + areaORW + areaLRW) <= areaOLR; // TODO alterei na reunião, antes estava usando == no lugar de <=
+	}
+
+	private static double areaTriangulo(Ponto a, Ponto b, Ponto c) {
+		// Fonte: http://www.inf.unioeste.br/~rogerio/Geometria-Triangulos.pdf
+		double area = 0.5 * (((a.getX() * b.getY()) - (a.getY() * b.getX())) + ((a.getY() * c.getX()) - (a.getX() * c.getY())) + ((b.getX() * c.getY()) - (b.getY() * c.getX())));
+		return Math.abs(area);
+	}
+
+	public static Ponto getInterseccaoRetas(Ponto k, Ponto l, Ponto m, Ponto n) {
+		float det = (n.getX() - m.getX()) * (l.getY() - k.getY()) - (n.getY() - m.getY()) * (l.getX() - k.getX());
+		float s = ((n.getX() - m.getX()) * (m.getY() - k.getY()) - (n.getY() - m.getY()) * (m.getX() - k.getX())) / det;
+		return new Ponto(k.getX() + (l.getX() - k.getX()) * s, k.getY() + (l.getY() - k.getY()) * s, null);
 	}
 
 }
