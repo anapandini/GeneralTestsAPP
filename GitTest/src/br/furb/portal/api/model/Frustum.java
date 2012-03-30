@@ -20,24 +20,46 @@ public class Frustum {
 	private Ponto frustumOrigin;
 	private Ponto frustumRight;
 	private Ponto frustumLeft;
+	private boolean frustumAuxiliar;
+
+	public Frustum(Ponto origem, Ponto direita, Ponto esquerda, GL10 gl) {
+		this.frustumAuxiliar = true;
+		this.frustumOrigin = origem;
+		this.frustumLeft = esquerda;
+		this.frustumRight = direita;
+		this.gl = gl;
+	}
 
 	public Frustum(Camera camera, float anguloInicial, float aberturaInicial, float farInicial, GL10 gl) {
+		this.frustumAuxiliar = false;
 		this.cameraFrustum = camera;
 		this.angulo = anguloInicial;
 		this.abertura = aberturaInicial;
 		this.far = farInicial;
 		this.gl = gl;
+		atualizar(); // Chamando o método que calcula os pontos do frustum para inicializar os pontos Origin, Left e Right
 	}
 
 	public void atualizar() {
-		gl.glColor4f(1f, 0f, 0f, 1f);
 
-		float x1 = PortalAPI_Utils.retornaX(cameraFrustum.getX(), angulo + abertura, far);
-		float y1 = PortalAPI_Utils.retornaY(cameraFrustum.getY(), angulo + abertura, far);
-		float x2 = PortalAPI_Utils.retornaX(cameraFrustum.getX(), angulo - abertura, far);
-		float y2 = PortalAPI_Utils.retornaY(cameraFrustum.getY(), angulo - abertura, far);
+		float tempCoords[] = null;
+		if (frustumAuxiliar) {
+			gl.glColor4f(0.2f, 1f, 0f, 1f);
+			tempCoords = new float[] { frustumOrigin.getX(), frustumOrigin.getY(), frustumLeft.getX(), frustumLeft.getY(), frustumRight.getX(), frustumRight.getY() };
+		} else {
+			gl.glColor4f(1f, 0f, 0f, 1f);
+			float x1 = PortalAPI_Utils.retornaX(cameraFrustum.getX(), angulo + abertura, far);
+			float y1 = PortalAPI_Utils.retornaY(cameraFrustum.getY(), angulo + abertura, far);
+			float x2 = PortalAPI_Utils.retornaX(cameraFrustum.getX(), angulo - abertura, far);
+			float y2 = PortalAPI_Utils.retornaY(cameraFrustum.getY(), angulo - abertura, far);
 
-		float tempCoords[] = { cameraFrustum.getX(), cameraFrustum.getY(), x1, y1, x2, y2 };
+			// TODO IMPORTANTE aqui, na hora de gravar a sala é necessário fazer a verificação de que sala o ponto está.
+			frustumOrigin = new Ponto(cameraFrustum.getX(), cameraFrustum.getY(), cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
+			frustumRight = new Ponto(x1, y1, cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
+			frustumLeft = new Ponto(x2, y2, cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
+
+			tempCoords = new float[] { cameraFrustum.getX(), cameraFrustum.getY(), x1, y1, x2, y2 };
+		}
 		FloatBuffer frustumCoords;
 		ByteBuffer vbb = ByteBuffer.allocateDirect(tempCoords.length * 4);
 		vbb.order(ByteOrder.nativeOrder());
@@ -51,10 +73,6 @@ public class Frustum {
 		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 3);
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 
-		// TODO IMPORTANTE aqui, na hora de gravar a sala é necessário fazer a verificação de que sala o ponto está.
-		frustumOrigin = new Ponto(cameraFrustum.getX(), cameraFrustum.getY(), cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
-		frustumRight = new Ponto(x1, y1, cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
-		frustumLeft = new Ponto(x2, y2, cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
 	}
 
 	public Ponto getFrustumOrigin() {
@@ -91,23 +109,6 @@ public class Frustum {
 				this.angulo = 0;
 			}
 		}
-	}
-
-	public boolean canReach(WayPoint wayPoint) {
-		// Fonte: ???
-		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
-		double areaOLR = areaTriangulo(getFrustumOrigin(), getFrustumLeft(), getFrustumRight());
-		double areaOLW = areaTriangulo(getFrustumOrigin(), getFrustumLeft(), wayPoint);
-		double areaORW = areaTriangulo(getFrustumOrigin(), getFrustumRight(), wayPoint);
-		double areaLRW = areaTriangulo(getFrustumLeft(), getFrustumRight(), wayPoint);
-
-		return areaOLR == (areaOLW + areaORW + areaLRW);
-	}
-
-	private double areaTriangulo(Ponto a, Ponto b, Ponto c) {
-		// Fonte: http://www.inf.unioeste.br/~rogerio/Geometria-Triangulos.pdf
-		double area = 0.5 * (((a.getX() * b.getY()) - (a.getY() * b.getX())) + ((a.getY() * c.getX()) - (a.getX() * c.getY())) + ((b.getX() * c.getY()) - (b.getY() * c.getX())));
-		return Math.abs(area);
 	}
 
 }
