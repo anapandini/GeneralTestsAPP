@@ -1,10 +1,20 @@
 package br.furb.portal.api;
 
-import br.furb.portal.api.model.Frustum;
 import br.furb.portal.api.model.Ponto;
 
 public class PortalAPI_Utils {
 
+	/**
+	 * Verifica se os dois segmentos de reta se intersectam.
+	 * O segmento de reta 1 é definido pelos pontos <code>a</code> e <code>b</code>,
+	 * e o segmento de reta 2 é definido pelos pontos <code>c</code> e <code>d</code>
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return Retorna verdadeiro quando os dois segmentos de reta se intersectam. Caso contrário, retorna falso.
+	 */
 	public static boolean intersecta(Ponto a, Ponto b, Ponto c, Ponto d) {
 		return se_encontram(a, b, c, d) || se_tocam(a, b, c, d) || se_intercepta(a, b, c, d);
 	}
@@ -109,13 +119,13 @@ public class PortalAPI_Utils {
 		return (float) (yAtual + (raio * Math.sin(Math.PI * angulo / 180.0)));
 	}
 
-	public static boolean canReach(Frustum frustum, Ponto ponto) {
+	public static boolean canReach(Ponto of, Ponto rf, Ponto lf, Ponto ponto) {
 		// Fonte: ???
 		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
-		double areaOLR = areaTriangulo(frustum.getFrustumOrigin(), frustum.getFrustumLeft(), frustum.getFrustumRight());
-		double areaOLW = areaTriangulo(frustum.getFrustumOrigin(), frustum.getFrustumLeft(), ponto);
-		double areaORW = areaTriangulo(frustum.getFrustumOrigin(), frustum.getFrustumRight(), ponto);
-		double areaLRW = areaTriangulo(frustum.getFrustumLeft(), frustum.getFrustumRight(), ponto);
+		double areaOLR = areaTriangulo(of, lf, rf);
+		double areaOLW = areaTriangulo(of, lf, ponto);
+		double areaORW = areaTriangulo(of, rf, ponto);
+		double areaLRW = areaTriangulo(lf, rf, ponto);
 
 		return (areaOLW + areaORW + areaLRW) <= areaOLR; // TODO alterei na reunião, antes estava usando == no lugar de <=
 	}
