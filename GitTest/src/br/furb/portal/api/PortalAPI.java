@@ -10,7 +10,7 @@ import br.furb.portal.api.model.Frustum;
 import br.furb.portal.api.model.Ponto;
 import br.furb.portal.api.model.Sala;
 import br.furb.portal.api.model.TipoDivisao;
-import br.furb.portal.api.model.WayPoint;
+import br.furb.portal.api.model.PontoInteresse;
 
 public class PortalAPI {
 
@@ -38,9 +38,9 @@ public class PortalAPI {
 	// // do frustum de visão da câmera em sua nova posição.
 	// }
 
-	public void visaoCamera(List<WayPoint> pontosInteresse, Map<Integer, Sala> salas, Camera camera, Frustum frustum) {
+	public void visaoCamera(List<PontoInteresse> pontosInteresse, Map<Integer, Sala> salas, Camera camera, Frustum frustum) {
 		// TODO isto deve ser um método
-		for (WayPoint wp : pontosInteresse) {
+		for (PontoInteresse wp : pontosInteresse) {
 			if (PortalAPI_Utils.canReach(frustum.getFrustumOrigin(), frustum.getFrustumRight(), frustum.getFrustumLeft(), wp)) {
 				camera.adicionaPontoVisto(wp);
 			}
@@ -85,7 +85,7 @@ public class PortalAPI {
 	// // TODO talvez deva existir um método que controle isso
 	// }
 
-	public void moverCamera(Camera camera, float novoXCamera, float novoYCamera, List<WayPoint> pontosInteresse, Map<Integer, Sala> salas, Frustum frustum) {
+	public void moverCamera(Camera camera, float novoXCamera, float novoYCamera, List<PontoInteresse> pontosInteresse, Map<Integer, Sala> salas, Frustum frustum) {
 		boolean podeMover = true;
 		for (Divisao div : camera.getSala().getDivisoes()) {
 			// TODO necessário documentar este trecho de código
