@@ -31,6 +31,7 @@ public class Controle {
 	private List<PontoInteresse> pontosInteresse;
 	private Camera camera;
 	private Frustum frustum;
+	private List<Frustum> frustumsAuxiliares;
 
 	public Controle(GL10 gl) {
 		this.gl = gl;
@@ -40,6 +41,7 @@ public class Controle {
 		this.deslocamentoObservador = 0.1f;
 		this.camera = new Camera(-0.1f, -0.1f, gl, getSalaPorId(1));
 		this.frustum = new Frustum(camera, anguloVisao, 10.0f, 0.6f);
+		this.frustumsAuxiliares = new ArrayList<Frustum>();
 
 		portalAPI = new PortalAPI();
 	}
@@ -135,11 +137,11 @@ public class Controle {
 		gl.glDrawArrays(GL10.GL_POINTS, 0, 1);
 	}
 
-	private void desenharFrustum() {
+	private void desenharFrustum(Frustum frustumDesenho) {
 		gl.glColor4f(1f, 0f, 0f, 1f);
 		gl.glLineWidth(1.5f);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, frustum.getCoordenadas());
+		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, frustumDesenho.getCoordenadas());
 		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 3);
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 	}
@@ -161,8 +163,13 @@ public class Controle {
 			desenharPontoInteresse(wp);
 		}
 
-		desenharFrustum();
+		desenharFrustum(frustum);
 		desenharCamera();
+
+		// TODO o usuário deve poder escolher se quer ver os frustums auxiliares ou não
+		for (Frustum f : frustumsAuxiliares) {
+			desenharFrustum(f);
+		}
 	}
 
 	public void rotacionaFrustumBaixo() {
@@ -179,7 +186,7 @@ public class Controle {
 
 	public void verificaPontosInteresse() {
 		camera.limpaPontosVistos();
-		portalAPI.visaoCamera(pontosInteresse, salas, camera, frustum);
+		frustumsAuxiliares = portalAPI.visaoCamera(pontosInteresse, salas, camera, frustum);
 	}
 
 	private Sala getSalaPorId(int id) {

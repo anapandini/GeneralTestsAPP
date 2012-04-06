@@ -16,7 +16,7 @@ import br.furb.portal.api.model.TipoDivisao;
 public class PortalAPI {
 
 	// TODO nome do método temporário, avaliar nome melhor
-	private void visao(Ponto fo, Ponto fd, Ponto fe, Sala salaCorrente, List<PontoInteresse> pontosInteresse, Camera camera, List<Integer> idSalasVisitadas) {
+	private void visao(Ponto fo, Ponto fd, Ponto fe, Sala salaCorrente, List<PontoInteresse> pontosInteresse, Camera camera, List<Integer> idSalasVisitadas, List<Frustum> frustumsAuxiliares) {
 		if (!idSalasVisitadas.contains(salaCorrente.getIdentificadorSala())) {
 
 			idSalasVisitadas.add(salaCorrente.getIdentificadorSala());
@@ -56,7 +56,8 @@ public class PortalAPI {
 
 				// se tiver as coordenadas preenchidas, significa que tem um novo frustum para a próxima sala
 				if (novoFe != null && novoFd != null) {
-					visao(fo, novoFd, novoFe, retornaProximaSala(salaCorrente, div), pontosInteresse, camera, idSalasVisitadas);
+					frustumsAuxiliares.add(new Frustum(fo, novoFe, novoFd));
+					visao(fo, novoFd, novoFe, retornaProximaSala(salaCorrente, div), pontosInteresse, camera, idSalasVisitadas, frustumsAuxiliares);
 				}
 			}
 		}
@@ -69,35 +70,10 @@ public class PortalAPI {
 		return div.getSalaDestino();
 	}
 
-	public void visaoCamera(List<PontoInteresse> pontosInteresse, Map<Integer, Sala> salas, Camera camera, Frustum frustum) {
-		// TODO testando métodos para recursividade
-		visao(frustum.getFrustumOrigin(), frustum.getFrustumRight(), frustum.getFrustumLeft(), camera.getSala(), pontosInteresse, camera, new ArrayList<Integer>());
-		// TODO fim testes recursividade
-
-		// TODO isto deve ser um método
-		for (PontoInteresse wp : pontosInteresse) {
-			if (wp.getSala().getIdentificadorSala() == camera.getSala().getIdentificadorSala()) {
-				if (PortalAPI_Utils.pontoNoTrianguloMatrizDalton(frustum.getFrustumOrigin(), frustum.getFrustumRight(), frustum.getFrustumLeft(), wp)) {
-					camera.adicionaPontoVisto(wp);
-				}
-			}
-		}
-		// TODO depois de ver este frustum, tem que ver se ele não está vendo um portal e ir fazendo até o final
-		// TODO tem que marcar também em uma lista quais os portais que já foram vistos
-		for (Divisao div : camera.getSala().getPortais()) {
-			// Tenho um portal e o frustum
-			// Verificar o lado direito e o lado esquerdo do frustum
-			// Direito
-			if (PortalAPI_Utils.intersecta(frustum.getFrustumRight(), frustum.getFrustumOrigin(), div.getOrigem(), div.getDestino())) {
-				// guarda os novos pontos do frustum
-
-			}
-
-			// Esquerdo
-			if (PortalAPI_Utils.intersecta(frustum.getFrustumLeft(), frustum.getFrustumOrigin(), div.getOrigem(), div.getDestino())) {
-				// Lado esquerdo intersecta
-			}
-		}
+	public List<Frustum> visaoCamera(List<PontoInteresse> pontosInteresse, Map<Integer, Sala> salas, Camera camera, Frustum frustum) {
+		List<Frustum> frustumsAuxiliares = new ArrayList<Frustum>();
+		visao(frustum.getFrustumOrigin(), frustum.getFrustumRight(), frustum.getFrustumLeft(), camera.getSala(), pontosInteresse, camera, new ArrayList<Integer>(), frustumsAuxiliares);
+		return frustumsAuxiliares;
 	}
 
 	public void moverCamera(Camera camera, float novoXCamera, float novoYCamera, List<PontoInteresse> pontosInteresse, Map<Integer, Sala> salas, Frustum frustum) {
@@ -112,10 +88,6 @@ public class PortalAPI {
 						camera.setSala(div.getSalaOrigem());
 					}
 					Log.d("tcc", String.valueOf(camera.getSala().getIdentificadorSala()));
-
-					// TODO documentar
-					// Como moveu a câmera, agora precisa ver o que ela está enxergando
-					visaoCamera(pontosInteresse, salas, camera, frustum);
 				} else {
 					podeMover = false;
 				}
