@@ -119,7 +119,49 @@ public class PortalAPI_Utils {
 		return (float) (yAtual + (raio * Math.sin(Math.PI * angulo / 180.0)));
 	}
 
-	public static boolean canReach(Ponto of, Ponto rf, Ponto lf, Ponto ponto) {
+	public static boolean pontoNoTrianguloMatrizDalton(Ponto a, Ponto b, Ponto c, Ponto d) {
+		Ponto ab = null;
+		Ponto ac = null;
+		float ter;
+		float[][] matrizAuxiliar = new float[2][2];
+		float[][] matrizI = new float[2][2]; // TODO que nome é esse??
+
+		ab = SubVetor2D(b, a);
+		ac = SubVetor2D(c, a);
+
+		matrizAuxiliar[0][0] = ab.getX();
+		matrizAuxiliar[0][1] = ab.getY();
+
+		matrizAuxiliar[1][0] = ac.getX();
+		matrizAuxiliar[1][1] = ac.getY();
+
+		ter = 1 / ((matrizAuxiliar[0][0] * matrizAuxiliar[1][1]) - (matrizAuxiliar[1][0] * matrizAuxiliar[0][1]));
+		matrizI[0][0] = ter * matrizAuxiliar[1][1];
+		matrizI[0][1] = ter * -matrizAuxiliar[0][1];
+		matrizI[1][0] = ter * -matrizAuxiliar[1][0];
+		matrizI[1][1] = ter * matrizAuxiliar[0][0];
+
+		float s, t;
+
+		Ponto at = SubVetor2D(d, a);
+		s = (at.getX() * matrizI[0][0]) + (at.getY() * matrizI[1][0]);
+		t = (at.getX() * matrizI[0][1]) + (at.getY() * matrizI[1][1]);
+		if (!((s < 0) || (t < 0) || ((s + t) > 1))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static Ponto SubVetor2D(Ponto p1, Ponto p2) {
+		float x = (p1.getX() - p2.getX());
+		float y = (p1.getY() - p2.getY());
+
+		Ponto c = new Ponto(x, y, null);
+		return c;
+	}
+
+	public static boolean pontoNoTrianguloUsandoSomaAreas(Ponto of, Ponto rf, Ponto lf, Ponto ponto) {
 		// Fonte: ???
 		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
 		double areaOLR = areaTriangulo(of, lf, rf);

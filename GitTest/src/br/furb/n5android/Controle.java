@@ -24,9 +24,6 @@ public class Controle {
 	private PortalAPI portalAPI;
 
 	private GL10 gl;
-
-	// private float observadorX;
-	// private float observadorY;
 	private float deslocamentoObservador; // TODO pode ser um campo futuramente na interface
 	private float anguloVisao; // TODO pode ser um campo futuramente na interface
 
@@ -36,8 +33,6 @@ public class Controle {
 	private Frustum frustum;
 
 	public Controle(GL10 gl) {
-		// this.observadorX = -0.1f;
-		// this.observadorY = -0.1f;
 		this.gl = gl;
 		initSalas();
 		initPontosInteresse();
@@ -50,7 +45,6 @@ public class Controle {
 	}
 
 	public void moverCamera() {
-		// portalAPI.deslocaCamera();
 		float novoXCamera = PortalAPI_Utils.retornaX(camera.getX(), anguloVisao, deslocamentoObservador);
 		float novoYCamera = PortalAPI_Utils.retornaY(camera.getY(), anguloVisao, deslocamentoObservador);
 
@@ -151,15 +145,11 @@ public class Controle {
 	}
 
 	public void atualizar() {
-		// TODO aqui é necessário estudar que implementações irão
-		// portalAPI.atualizar();
-
 		for (Sala sala : salas.values()) {
 			desenharSala(sala);
 		}
 
 		// TODO aqui podem ser desenhados apenas os pontos de interesse que a câmera viu. Isso até pode ser uma opção na interface
-
 		// Desenha todos os waypoints
 		GLES10.glColor4f(0f, 1f, 0f, 1.0f);
 		for (PontoInteresse wp : pontosInteresse) {
