@@ -1,5 +1,8 @@
 package br.furb.portal.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.furb.portal.api.model.Ponto;
 
 public class PortalAPI_Utils {
@@ -119,6 +122,25 @@ public class PortalAPI_Utils {
 		return (float) (yAtual + (raio * Math.sin(Math.PI * angulo / 180.0)));
 	}
 
+	private static Ponto SubVetor2D(Ponto p1, Ponto p2) {
+		float x = (p1.getX() - p2.getX());
+		float y = (p1.getY() - p2.getY());
+
+		Ponto c = new Ponto(x, y, null);
+		return c;
+	}
+
+	public static boolean pontoNoTrianguloUsandoSomaAreas(Ponto of, Ponto rf, Ponto lf, Ponto ponto) {
+		// Fonte: ???
+		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
+		double areaOLR = areaTriangulo(of, lf, rf);
+		double areaOLW = areaTriangulo(of, lf, ponto);
+		double areaORW = areaTriangulo(of, rf, ponto);
+		double areaLRW = areaTriangulo(lf, rf, ponto);
+
+		return (areaOLW + areaORW + areaLRW) <= areaOLR; // TODO alterei na reunião, antes estava usando == no lugar de <=
+	}
+
 	public static boolean pontoNoTrianguloMatrizDalton(Ponto a, Ponto b, Ponto c, Ponto d) {
 		Ponto ab = null;
 		Ponto ac = null;
@@ -153,23 +175,35 @@ public class PortalAPI_Utils {
 		return false;
 	}
 
-	private static Ponto SubVetor2D(Ponto p1, Ponto p2) {
-		float x = (p1.getX() - p2.getX());
-		float y = (p1.getY() - p2.getY());
+	public static boolean pontoNoTrianguloScanline(Ponto fo, Ponto fe, Ponto fd, Ponto pontoInteresse) {
+		List<Ponto> points = new ArrayList<Ponto>();
+		points.add(fo);
+		points.add(fd);
+		points.add(fe);
+		int n = 0;
+		for (int i = 0; i < points.size() - 1; i++) {
+			if (points.get(i).getY() != points.get(i + 1).getY()) {
+				// minha aresta é meu ponto atual e o proximo ponto
+				float ti = (pontoInteresse.getY() - points.get(i).getY()) / (points.get(i + 1).getY() - points.get(i).getY());
+				// x ponto interseccao
+				float xInt = points.get(i).getX() + (points.get(i + 1).getX() - points.get(i).getX()) * ti;
+				// y ponto interseccao
+				float yInt = pontoInteresse.getY();
+				Ponto pInt = new Ponto(xInt, yInt, null);
+				if (pInt.getX() == pontoInteresse.getX()) {
+					break;
+				} else if ((pInt.getX() > pontoInteresse.getX()) && (pInt.getY() > Math.min(points.get(i).getY(), points.get(i + 1).getY())) && (pInt.getY() <= Math.max(points.get(i).getY(), points.get(i + 1).getY()))) {
+					n++;
+				}
+			} else if ((pontoInteresse.getY() == points.get(i).getY()) && (pontoInteresse.getX() >= Math.min(points.get(i).getX(), points.get(i + 1).getX())) && pontoInteresse.getX() <= Math.max(points.get(i).getX(), points.get(i + 1).getX())) {
+				break;
+			}
+		}
+		if (n % 2 != 0) {
+			return true;
+		}
 
-		Ponto c = new Ponto(x, y, null);
-		return c;
-	}
-
-	public static boolean pontoNoTrianguloUsandoSomaAreas(Ponto of, Ponto rf, Ponto lf, Ponto ponto) {
-		// Fonte: ???
-		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
-		double areaOLR = areaTriangulo(of, lf, rf);
-		double areaOLW = areaTriangulo(of, lf, ponto);
-		double areaORW = areaTriangulo(of, rf, ponto);
-		double areaLRW = areaTriangulo(lf, rf, ponto);
-
-		return (areaOLW + areaORW + areaLRW) <= areaOLR; // TODO alterei na reunião, antes estava usando == no lugar de <=
+		return false;
 	}
 
 	private static double areaTriangulo(Ponto a, Ponto b, Ponto c) {
