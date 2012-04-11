@@ -2,7 +2,9 @@ package br.furb.n5android.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.MotionEvent;
+import br.furb.portal.api.model.Ponto;
 
 public class TCCSurfaceView extends GLSurfaceView {
 
@@ -19,6 +21,8 @@ public class TCCSurfaceView extends GLSurfaceView {
 		setRenderer(renderer);
 		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 	}
+
+	private Ponto anterior = new Ponto(1, 1, null);
 
 	@Override
 	public boolean onTouchEvent(MotionEvent e) {
@@ -50,6 +54,14 @@ public class TCCSurfaceView extends GLSurfaceView {
 			}
 
 			xInicio = xFinal = yInicio = yFinal = 0;
+
+			// TODO desenhando o ambiente
+			Log.d("TCC", "x: " + e.getX());
+			Log.d("TCC", "y: " + e.getY());
+			Ponto novo = new Ponto(e.getX(), e.getY(), null);
+			renderer.desenharDivisao(anterior, novo);
+			anterior = novo;
+
 			requestRender();
 			break;
 		}
