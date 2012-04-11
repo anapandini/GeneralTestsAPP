@@ -33,23 +33,15 @@ public class Controle {
 	private Frustum frustum;
 	private List<Frustum> frustumsAuxiliares;
 
-	// private int altura;
-	// private int largura;
-
-	private List<Divisao> divisoesUsuario;
-
-	public Controle(GL10 gl, int altura, int largura) {
+	public Controle(GL10 gl) {
 		this.gl = gl;
-		// this.altura = altura;
-		// this.largura = largura;
 		initSalas();
 		initPontosInteresse();
 		this.anguloVisao = 180.0f;
 		this.deslocamentoObservador = 0.1f;
-		this.camera = new Camera(1, 1, gl, getSalaPorId(1));
+		this.camera = new Camera(-0.1f, -0.1f, gl, getSalaPorId(1));
 		this.frustum = new Frustum(camera, anguloVisao, 10.0f, 0.6f);
 		this.frustumsAuxiliares = new ArrayList<Frustum>();
-		this.divisoesUsuario = new ArrayList<Divisao>();
 
 		portalAPI = new PortalAPI();
 	}
@@ -66,7 +58,6 @@ public class Controle {
 	public void initPontosInteresse() {
 		pontosInteresse = new ArrayList<PontoInteresse>();
 
-		pontosInteresse.add(new PontoInteresse(50, 50, gl, getSalaPorId(1))); // TODO teste
 		pontosInteresse.add(new PontoInteresse(-0.5f, -0.25f, gl, getSalaPorId(1)));
 		pontosInteresse.add(new PontoInteresse(0.9f, 0.9f, gl, getSalaPorId(2)));
 		pontosInteresse.add(new PontoInteresse(0.2f, 0.2f, gl, getSalaPorId(2)));
@@ -184,16 +175,6 @@ public class Controle {
 		for (Frustum f : frustumsAuxiliares) {
 			desenharFrustum(f);
 		}
-
-		// TODO aqui desenha o ambiente que o usuário estiver montando
-		for (Divisao div : divisoesUsuario) {
-			gl.glColor4f(1f, 0f, 0f, 1f);
-			gl.glLineWidth(2f);
-			gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-			gl.glVertexPointer(3, GL10.GL_FLOAT, 0, div.getBufferCoordenadas());
-			gl.glDrawArrays(GL10.GL_LINES, 0, 2);
-			gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-		}
 	}
 
 	public void rotacionaFrustumBaixo() {
@@ -221,7 +202,4 @@ public class Controle {
 		return sala;
 	}
 
-	public void desenharDivisao(Ponto anterior, Ponto novo) {
-		this.divisoesUsuario.add(new Divisao(anterior, novo, TipoDivisao.PAREDE));
-	}
 }
