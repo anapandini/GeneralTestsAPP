@@ -35,11 +35,11 @@ public class Controle {
 
 	public Controle(GL10 gl) {
 		this.gl = gl;
-		initSalas();
-		initPontosInteresse();
+		initSalas2();
+		initPontosInteresse2();
 		this.anguloVisao = 180.0f;
 		this.deslocamentoObservador = 0.1f;
-		this.camera = new Camera(-0.1f, -0.1f, gl, getSalaPorId(1));
+		this.camera = new Camera(-0.1f, -0.1f, gl, getSalaPorId(2));
 		this.frustum = new Frustum(camera, anguloVisao, 10.0f, 0.6f);
 		this.frustumsAuxiliares = new ArrayList<Frustum>();
 
@@ -57,11 +57,21 @@ public class Controle {
 
 	public void initPontosInteresse() {
 		pontosInteresse = new ArrayList<PontoInteresse>();
-
 		pontosInteresse.add(new PontoInteresse(-0.5f, -0.25f, gl, getSalaPorId(1)));
 		pontosInteresse.add(new PontoInteresse(0.9f, 0.9f, gl, getSalaPorId(2)));
 		pontosInteresse.add(new PontoInteresse(0.2f, 0.2f, gl, getSalaPorId(2)));
 		pontosInteresse.add(new PontoInteresse(-0.8f, -0.75f, gl, getSalaPorId(1)));
+	}
+
+	public void initPontosInteresse2() {
+		pontosInteresse = new ArrayList<PontoInteresse>();
+		pontosInteresse.add(new PontoInteresse(-0.7f, 0.5f, gl, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(0.1f, 0.8f, gl, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(0.1f, 0.1f, gl, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(0.5f, 0.3f, gl, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(0.6f, -0.6f, gl, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(0f, -0.4f, gl, getSalaPorId(3)));
+		pontosInteresse.add(new PontoInteresse(-0.9f, -0.8f, gl, getSalaPorId(3)));
 	}
 
 	public void initSalas() {
@@ -106,7 +116,65 @@ public class Controle {
 	}
 
 	public void initSalas2() {
+		salas = new HashMap<Integer, Sala>();
 
+		Sala sala1 = new Sala(1);
+		Divisao div1 = new Divisao(new Ponto(1, 1, sala1), new Ponto(1, -1, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		div1 = new Divisao(new Ponto(1, -1, sala1), new Ponto(0.2f, -1, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		Divisao portal1Sala1 = new Divisao(new Ponto(0.2f, -1, sala1), new Ponto(0.2f, -0.75f, sala1), TipoDivisao.PORTAL);
+		sala1.addDivisao(portal1Sala1);
+		div1 = new Divisao(new Ponto(0.2f, -0.75f, sala1), new Ponto(0.2f, 0, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		div1 = new Divisao(new Ponto(0.2f, 0, sala1), new Ponto(0.4f, 0.5f, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+		Divisao portal2Sala1 = new Divisao(new Ponto(0.4f, 0.5f, sala1), new Ponto(0.7f, 0.8f, sala1), TipoDivisao.PORTAL);
+		sala1.addDivisao(portal2Sala1);
+		div1 = new Divisao(new Ponto(0.7f, 0.8f, sala1), new Ponto(1, 1, sala1), TipoDivisao.PAREDE);
+		sala1.addDivisao(div1);
+
+		Sala sala2 = new Sala(2);
+		Divisao div2 = new Divisao(new Ponto(-1, 1, sala2), new Ponto(1, 1, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		div2 = new Divisao(new Ponto(1, 1, sala2), new Ponto(0.7f, 0.8f, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		Divisao portal1Sala2 = new Divisao(new Ponto(0.7f, 0.8f, sala2), new Ponto(0.4f, 0.5f, sala2), TipoDivisao.PORTAL);
+		sala2.addDivisao(portal1Sala2);
+		div2 = new Divisao(new Ponto(0.4f, 0.5f, sala2), new Ponto(0.2f, 0, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		div2 = new Divisao(new Ponto(0.2f, 0, sala2), new Ponto(-1, 0, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+		div2 = new Divisao(new Ponto(-1, 0, sala2), new Ponto(-1, 1, sala2), TipoDivisao.PAREDE);
+		sala2.addDivisao(div2);
+
+		Sala sala3 = new Sala(3);
+		Divisao div3 = new Divisao(new Ponto(-1, 0, sala3), new Ponto(0.2f, 0, sala3), TipoDivisao.PAREDE);
+		sala3.addDivisao(div3);
+		div3 = new Divisao(new Ponto(0.2f, 0, sala3), new Ponto(0.2f, -0.75f, sala3), TipoDivisao.PAREDE);
+		sala3.addDivisao(div3);
+		Divisao portal1Sala3 = new Divisao(new Ponto(0.2f, -0.75f, sala3), new Ponto(0.2f, -1, sala3), TipoDivisao.PORTAL);
+		sala3.addDivisao(portal1Sala3);
+		div3 = new Divisao(new Ponto(0.2f, -1, sala3), new Ponto(-1, -1, sala3), TipoDivisao.PAREDE);
+		sala3.addDivisao(div3);
+		div3 = new Divisao(new Ponto(-1, -1, sala3), new Ponto(-1, 0, sala3), TipoDivisao.PAREDE);
+		sala3.addDivisao(div3);
+
+		portal1Sala1.setSalaOrigem(sala1);
+		portal1Sala1.setSalaDestino(sala3);
+
+		portal2Sala1.setSalaOrigem(sala1);
+		portal2Sala1.setSalaDestino(sala2);
+
+		portal1Sala2.setSalaOrigem(sala2);
+		portal1Sala2.setSalaDestino(sala1);
+
+		portal1Sala3.setSalaOrigem(sala3);
+		portal1Sala3.setSalaDestino(sala1);
+
+		salas.put(sala1.getIdentificadorSala(), sala1);
+		salas.put(sala2.getIdentificadorSala(), sala2);
+		salas.put(sala3.getIdentificadorSala(), sala3);
 	}
 
 	private void desenharSala(Sala sala) {
