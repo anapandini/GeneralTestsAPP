@@ -39,7 +39,7 @@ public class Controle {
 		initPontosInteresse2();
 		this.anguloVisao = 180.0f;
 		this.deslocamentoObservador = 0.1f;
-		this.camera = new Camera(-0.1f, -0.1f, gl, getSalaPorId(2));
+		this.camera = new Camera(-0.1f, -0.1f, gl, getSalaPorId(3));
 		this.frustum = new Frustum(camera, anguloVisao, 10.0f, 0.6f);
 		this.frustumsAuxiliares = new ArrayList<Frustum>();
 
