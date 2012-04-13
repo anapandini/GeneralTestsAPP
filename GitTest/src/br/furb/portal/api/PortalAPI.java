@@ -97,6 +97,7 @@ public class PortalAPI {
 		if (podeMover) {
 			camera.setX(novoXCamera);
 			camera.setY(novoYCamera);
+			frustum.atualizarCoordenadas();
 		}
 	}
 

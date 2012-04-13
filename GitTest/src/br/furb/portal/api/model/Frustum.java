@@ -18,13 +18,15 @@ public class Frustum {
 	private Ponto frustumRight;
 	private Ponto frustumLeft;
 
-	private boolean auxiliar;
+	private FloatBuffer frustumCoords;
+	private boolean frustumAuxiliar;
 
 	public Frustum(Ponto fo, Ponto fe, Ponto fd) {
 		this.frustumOrigin = fo;
 		this.frustumLeft = fe;
 		this.frustumRight = fd;
-		this.auxiliar = true;
+		this.frustumAuxiliar = true;
+		atualizarCoordenadas();
 	}
 
 	public Frustum(Camera camera, float anguloInicial, float aberturaInicial, float farInicial) {
@@ -32,13 +34,13 @@ public class Frustum {
 		this.angulo = anguloInicial;
 		this.abertura = aberturaInicial;
 		this.far = farInicial;
-		this.auxiliar = false;
+		this.frustumAuxiliar = false;
+		atualizarCoordenadas();
 	}
 
-	public FloatBuffer getCoordenadas() {
+	public void atualizarCoordenadas() {
 		float tempCoords[] = null;
-
-		if (auxiliar) {
+		if (frustumAuxiliar) {
 			tempCoords = new float[] { frustumOrigin.getX(), frustumOrigin.getY(), frustumRight.getX(), frustumRight.getY(), frustumLeft.getX(), frustumLeft.getY() };
 		} else {
 			float x1 = PortalAPI_Utils.retornaX(cameraFrustum.getX(), angulo + abertura, far);
@@ -46,19 +48,20 @@ public class Frustum {
 			float x2 = PortalAPI_Utils.retornaX(cameraFrustum.getX(), angulo - abertura, far);
 			float y2 = PortalAPI_Utils.retornaY(cameraFrustum.getY(), angulo - abertura, far);
 			// TODO IMPORTANTE aqui, na hora de gravar a sala é necessário fazer a verificação de que sala o ponto está.
-			frustumOrigin = new Ponto(cameraFrustum.getX(), cameraFrustum.getY(), cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
-			frustumRight = new Ponto(x1, y1, cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
-			frustumLeft = new Ponto(x2, y2, cameraFrustum.getSala()); // TODO esta sala pode não ser a correta
+			frustumOrigin = new Ponto(cameraFrustum.getX(), cameraFrustum.getY(), null); // TODO esta sala pode não ser a correta
+			frustumRight = new Ponto(x1, y1, null); // TODO esta sala pode não ser a correta
+			frustumLeft = new Ponto(x2, y2, null); // TODO esta sala pode não ser a correta
 			tempCoords = new float[] { cameraFrustum.getX(), cameraFrustum.getY(), x1, y1, x2, y2 };
 		}
 
-		FloatBuffer frustumCoords;
 		ByteBuffer vbb = ByteBuffer.allocateDirect(tempCoords.length * 4);
 		vbb.order(ByteOrder.nativeOrder());
 		frustumCoords = vbb.asFloatBuffer();
 		frustumCoords.put(tempCoords);
 		frustumCoords.position(0);
+	}
 
+	public FloatBuffer getCoordenadas() {
 		return frustumCoords;
 	}
 
@@ -96,6 +99,7 @@ public class Frustum {
 				this.angulo = 0;
 			}
 		}
+		atualizarCoordenadas();
 	}
 
 }
