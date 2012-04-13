@@ -4,10 +4,21 @@ import android.app.Activity;
 import android.os.Bundle;
 import br.furb.n5android.view.TCCSurfaceView;
 
+/**
+ * Trabalho de Conclusão de Curso II
+ * Fundação Universidade Regional de Blumenau - FURB
+ * Orientador: Dalton Solano dos Reis
+ * Biblioteca de algoritmos de portais para a plataforma Android
+ * 
+ * @author Ana Paula Pandini
+ */
 public class TCCAndroidActivity extends Activity {
 
 	private TCCSurfaceView surfaceView;
 
+	/**
+	 * Aqui a atividade Android é inicializada.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

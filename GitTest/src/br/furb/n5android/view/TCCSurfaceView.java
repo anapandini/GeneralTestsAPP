@@ -4,17 +4,24 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
+/**
+ * Trabalho de Conclusão de Curso II
+ * Fundação Universidade Regional de Blumenau - FURB
+ * Orientador: Dalton Solano dos Reis
+ * Biblioteca de algoritmos de portais para a plataforma Android
+ * 
+ * @author Ana Paula Pandini
+ */
 public class TCCSurfaceView extends GLSurfaceView {
 
 	private TCCRenderer renderer;
 
-	// Utilizado no método de captura de toque de tela
+	// Atributos utilizados para determinar a direção do toque do usuário na tela
 	private float xInicio, yInicio = 0;
 	private float xFinal, yFinal = 0;
 
 	public TCCSurfaceView(Context context) {
 		super(context);
-
 		renderer = new TCCRenderer();
 		setRenderer(renderer);
 		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);

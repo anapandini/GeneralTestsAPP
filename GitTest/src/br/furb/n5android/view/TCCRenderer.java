@@ -8,11 +8,22 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import br.furb.n5android.Controle;
 
+/**
+ * Trabalho de Conclusão de Curso II
+ * Fundação Universidade Regional de Blumenau - FURB
+ * Orientador: Dalton Solano dos Reis
+ * Biblioteca de algoritmos de portais para a plataforma Android
+ * 
+ * @author Ana Paula Pandini
+ */
 public class TCCRenderer implements GLSurfaceView.Renderer {
 
 	private Controle controle;
 
 	@Override
+	/**
+	 * Utilizado para desenhar o frame atual
+	 */
 	public void onDrawFrame(GL10 gl) {
 		GLES10.glClear(GLES10.GL_COLOR_BUFFER_BIT | GLES10.GL_DEPTH_BUFFER_BIT);
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
@@ -24,6 +35,9 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 	}
 
 	@Override
+	/**
+	 * Utilizado quando a superfície muda de tamanho (por exemplo, quando é alterada a orientação da tela do disposito móvel de paisagem para retrato, e vice-versa.
+	 */
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		GLES10.glViewport(0, 0, width, height);
 
@@ -36,19 +50,31 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 	}
 
 	@Override
+	/**
+	 * Utilizado quando a superfície é criada ou recriada.
+	 */
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		GLES10.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		controle = new Controle(gl);
 	}
 
+	/**
+	 * Altera a direção do campo de visão do observador
+	 */
 	public void rotacionaFrustumParaBaixo() {
 		controle.rotacionaFrustumBaixo();
 	}
 
+	/**
+	 * Altera a direção do campo de visão do observador
+	 */
 	public void rotacionaFrustumParaCima() {
 		controle.rotacionaFrustumCima();
 	}
 
+	/**
+	 * Dispara o método <code>Controle.moverCamera()</code> que é responsável por todos os ajustes e validações necessários para movimentar o observador.
+	 */
 	public void moverCamera() {
 		controle.moverCamera();
 	}
