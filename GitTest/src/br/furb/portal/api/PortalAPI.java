@@ -54,7 +54,7 @@ public class PortalAPI {
 			Ponto novoFd = null;
 			Ponto novoFe = null;
 			for (Divisao div : salaCorrente.getPortais()) {
-				if (PortalAPI_Utils.intersecta(fo, fe, div.getDestino(), div.getOrigem())) {
+				if (PortalAPI_Utils.intercepta(fo, fe, div.getDestino(), div.getOrigem())) {
 					novoFe = fe;
 					if (PortalAPI_Utils.pontoNoTrianguloMatrizDalton(fo, fe, fd, div.getDestino())) {
 						novoFd = PortalAPI_Utils.getInterseccaoRetas(fo, div.getDestino(), fe, fd);
@@ -63,7 +63,7 @@ public class PortalAPI {
 					} else {
 						novoFd = fd;
 					}
-				} else if (PortalAPI_Utils.intersecta(fo, fd, div.getDestino(), div.getOrigem())) {
+				} else if (PortalAPI_Utils.intercepta(fo, fd, div.getDestino(), div.getOrigem())) {
 					novoFd = fd;
 					if (PortalAPI_Utils.pontoNoTrianguloMatrizDalton(fo, fe, fd, div.getDestino())) {
 						novoFe = PortalAPI_Utils.getInterseccaoRetas(fo, div.getDestino(), fe, fd);
@@ -124,7 +124,7 @@ public class PortalAPI {
 		boolean podeMover = true;
 		for (Divisao div : camera.getSala().getDivisoes()) {
 
-			if (PortalAPI_Utils.intersecta(camera, new Ponto(novoXCamera, novoYCamera, null), div.getOrigem(), div.getDestino())) {
+			if (PortalAPI_Utils.intercepta(camera, new Ponto(novoXCamera, novoYCamera, null), div.getOrigem(), div.getDestino())) {
 				if (div.getTipo() == TipoDivisao.PORTAL) {
 					if (div.getSalaOrigem().getIdentificadorSala() == camera.getSala().getIdentificadorSala()) {
 						camera.setSala(div.getSalaDestino());

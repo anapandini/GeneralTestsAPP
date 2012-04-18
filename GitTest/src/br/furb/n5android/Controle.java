@@ -59,10 +59,7 @@ public class Controle {
 	}
 
 	/**
-	 * Calcula as novas coordenadas do observador, verificando se ele pode movimentar-se ou não. <br>
-	 * Quando houver uma parede no caminho, este método irá detectar e não irá atualizar as coordenadas do observador, para que ele não se mova. <br>
-	 * Caso contrário, irá movimentar o observador, verificar se ele trocou de sala e também identificar os pontos de interesse que estão
-	 * no campo de visão da nova posição.
+	 * @see br.furb.portal.api.PortalAPI#moverCamera(Camera, float, float, List, Map, Frustum)
 	 */
 	public void moverCamera() {
 		float novoXCamera = PortalAPI_Utils.retornaX(camera.getX(), anguloVisao, deslocamentoObservador);

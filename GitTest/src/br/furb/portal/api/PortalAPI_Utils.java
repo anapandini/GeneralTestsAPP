@@ -5,6 +5,16 @@ import java.util.List;
 
 import br.furb.portal.api.model.Ponto;
 
+/**
+ * Trabalho de Conclusão de Curso II
+ * Fundação Universidade Regional de Blumenau - FURB
+ * Orientador: Dalton Solano dos Reis
+ * Biblioteca de algoritmos de portais para a plataforma Android
+ * 
+ * Muitos dos conceitos desta classe foram estudados em: http://www2.inatel.br/docentes/rosanna/cursos/C421-C_20072/AG2.pdf
+ * 
+ * @author Ana Paula Pandini
+ */
 public class PortalAPI_Utils {
 
 	/**
@@ -18,10 +28,20 @@ public class PortalAPI_Utils {
 	 * @param d
 	 * @return Retorna verdadeiro quando os dois segmentos de reta se intersectam. Caso contrário, retorna falso.
 	 */
-	public static boolean intersecta(Ponto a, Ponto b, Ponto c, Ponto d) {
+	public static boolean intercepta(Ponto a, Ponto b, Ponto c, Ponto d) {
 		return se_encontram(a, b, c, d) || se_tocam(a, b, c, d) || se_intercepta(a, b, c, d);
 	}
 
+	/**
+	 * Determina se dois segmentos de retas (segmentos AB e CD) se tocam.
+	 * Isto acontece quando um ponto extremo de um dos segmentos é imediatamente na sequência de outro ponto extremo do outro segmento.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
 	private static boolean se_tocam(Ponto a, Ponto b, Ponto c, Ponto d) {
 		if (alinhados(a, b, c, d) || superpostos(a, b, c, d)) {
 			return false;
@@ -29,22 +49,53 @@ public class PortalAPI_Utils {
 		return (em(c, a, b) || em(d, a, b) || em(a, c, d) || em(b, c, d));
 	}
 
+	/**
+	 * Indica se os segmentos AB e CD estão alinhados e possuem um trecho em comum.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
 	private static boolean superpostos(Ponto a, Ponto b, Ponto c, Ponto d) {
-
 		if ((lado(a, b, c) == 0) && (lado(a, b, d) == 0)) {
 			return (em(c, a, b) || em(d, a, b) || em(a, c, d) || em(b, c, d));
 		}
 		return false;
 	}
 
+	/**
+	 * Indica se o ponto P é coincide com um dos pontos extremos do segmento AB
+	 * 
+	 * @param p
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	private static boolean extremo(Ponto p, Ponto a, Ponto b) {
 		return (sobre(p, a) || sobre(p, b));
 	}
 
+	/**
+	 * Indica se o ponto A é coincidente ao ponto B
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	private static boolean sobre(Ponto a, Ponto b) {
 		return ((b.getX() == a.getX()) || (b.getY() == a.getY()));
 	}
 
+	/**
+	 * Indica se o ponto P está compreendido no segmento AB, mas não coincide com os pontos A e B
+	 * 
+	 * @param p
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	private static boolean em(Ponto p, Ponto a, Ponto b) {
 		if ((lado(a, b, p) == 0) && (!extremo(p, a, b))) {
 			if (a.getX() != b.getX()) {
@@ -55,6 +106,15 @@ public class PortalAPI_Utils {
 		return false;
 	}
 
+	/**
+	 * Indica se os segmentos AB e CD estão alinhados, mas sem verificar se possuem um trecho em comum.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
 	private static boolean alinhados(Ponto a, Ponto b, Ponto c, Ponto d) {
 		if ((lado(a, b, c) == 0) && (lado(a, b, d) == 0)) {
 			return (!em(c, a, b) && !em(d, a, b) && !em(a, c, d) && !em(b, c, d));
@@ -62,6 +122,15 @@ public class PortalAPI_Utils {
 		return false;
 	}
 
+	/**
+	 * Indica se os segmentos de retas AB e CD se encontram, ou seja, se possuem um ponto extremo coincidente.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
 	private static boolean se_encontram(Ponto a, Ponto b, Ponto c, Ponto d) {
 		if (iguais(a, b, c, d)) {
 			return false;
@@ -72,11 +141,29 @@ public class PortalAPI_Utils {
 		(sobre(b, d) && !em(c, a, b) && !em(a, c, d)));
 	}
 
+	/**
+	 * Retorna verdadeiro quando os segmentos de reta AB e CD são iguais (coincidentes).
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
 	private static boolean iguais(Ponto a, Ponto b, Ponto c, Ponto d) {
 		return ((sobre(a, c) && sobre(b, d)) || (sobre(a, d) && sobre(b, c)));
 	}
 
-	private static boolean intesercta_reta(Ponto a, Ponto b, Ponto c, Ponto d) {
+	/**
+	 * Indica se as retas AB e CD se interceptam.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
+	private static boolean intercerpta_reta(Ponto a, Ponto b, Ponto c, Ponto d) {
 		// Fonte: http://www2.inatel.br/docentes/rosanna/cursos/C421-C_20072/AG2.pdf
 		double x1, x2, x3, x4, y1, y2, y3, y4;
 		x1 = Math.min(a.getX(), b.getX());
@@ -92,8 +179,17 @@ public class PortalAPI_Utils {
 		return ((x2 >= x3) && (x4 >= x1) && (y2 >= y3) && (y4 >= y1));
 	}
 
+	/**
+	 * Verifica se os segmentos AB e CD se intersectam.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
 	private static boolean se_intercepta(Ponto a, Ponto b, Ponto c, Ponto d) {
-		if (!intesercta_reta(a, b, c, d)) {
+		if (!intercerpta_reta(a, b, c, d)) {
 			return false;
 		}
 		double abc = lado(a, b, c);
@@ -103,6 +199,16 @@ public class PortalAPI_Utils {
 		return ((abc * abd) < 0) && ((cda * cdb) < 0);
 	}
 
+	/**
+	 * Retorna a posição do ponto C em relação ao segmento AB.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @return Retorna -1 quando ponto C está a direita <br>
+	 *         Retorna 1 quando está a esquerda <br>
+	 *         E retorna 0 quando está alinhado.
+	 */
 	private static double lado(Ponto a, Ponto b, Ponto c) {
 		float s = a.getX() * b.getY() - a.getY() * b.getX() + a.getY() * c.getX() - a.getX() * c.getY() + b.getX() * c.getY() - b.getY() * c.getX();
 		if (s < 0) {
@@ -114,14 +220,39 @@ public class PortalAPI_Utils {
 		}
 	}
 
+	// TODO este javadoc precisa ser melhorado
+	/**
+	 * Retorna a nova coordenada x de um ponto baseando-se em um ângulo e taxa de deslocamento.
+	 * 
+	 * @param xAtual
+	 * @param angulo
+	 * @param raio
+	 * @return
+	 */
 	public static float retornaX(float xAtual, float angulo, float raio) {
 		return (float) (xAtual + (raio * Math.cos(Math.PI * angulo / 180.0)));
 	}
 
+	// TODO este javadoc precisa ser melhorado
+	/**
+	 * Retorna a nova coordenada y de um ponto baseando-se em um ângulo e taxa de deslocamento.
+	 * 
+	 * @param yAtual
+	 * @param angulo
+	 * @param raio
+	 * @return
+	 */
 	public static float retornaY(float yAtual, float angulo, float raio) {
 		return (float) (yAtual + (raio * Math.sin(Math.PI * angulo / 180.0)));
 	}
 
+	/**
+	 * Subtrai um vetor 2D
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
 	private static Ponto SubVetor2D(Ponto p1, Ponto p2) {
 		float x = (p1.getX() - p2.getX());
 		float y = (p1.getY() - p2.getY());
@@ -130,6 +261,16 @@ public class PortalAPI_Utils {
 		return c;
 	}
 
+	/**
+	 * Determina se um ponto pertence a um triângulo utilizando a comparação da área do triângulo com a soma da área de três triângulos formados
+	 * com os pontos do triângulo e o ponto de interesse.
+	 * 
+	 * @param of
+	 * @param rf
+	 * @param lf
+	 * @param ponto
+	 * @return
+	 */
 	public static boolean pontoNoTrianguloUsandoSomaAreas(Ponto of, Ponto rf, Ponto lf, Ponto ponto) {
 		// Fonte: ???
 		// TODO Fazer método que gere triângulos com os pontos do frustum + o waypoint e ver se a área deles é igual a área do frustum
@@ -141,6 +282,16 @@ public class PortalAPI_Utils {
 		return (areaOLW + areaORW + areaLRW) <= areaOLR; // TODO alterei na reunião, antes estava usando == no lugar de <=
 	}
 
+	// TODO Procurar o livro para documentar este método de forma decente
+	/**
+	 * Determina se um ponto pertence a um triângulo utilizando a técnica passada pelo Dalton.
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
 	public static boolean pontoNoTrianguloMatrizDalton(Ponto a, Ponto b, Ponto c, Ponto d) {
 		Ponto ab = null;
 		Ponto ac = null;
@@ -175,6 +326,16 @@ public class PortalAPI_Utils {
 		return false;
 	}
 
+	/**
+	 * Tentativa de scanline para determinar se um ponto pertence a um triângulo.
+	 * Não funciona completamente. Está sendo mantido no código para fazer uma análise de desempenho depois.
+	 * 
+	 * @param fo
+	 * @param fe
+	 * @param fd
+	 * @param pontoInteresse
+	 * @return
+	 */
 	public static boolean pontoNoTrianguloScanline(Ponto fo, Ponto fe, Ponto fd, Ponto pontoInteresse) {
 		List<Ponto> points = new ArrayList<Ponto>();
 		points.add(fo);
@@ -206,12 +367,29 @@ public class PortalAPI_Utils {
 		return false;
 	}
 
+	/**
+	 * Realiza o cálculo da área do triângulo definido pelos pontos passados por parâmetro
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @return
+	 */
 	private static double areaTriangulo(Ponto a, Ponto b, Ponto c) {
 		// Fonte: http://www.inf.unioeste.br/~rogerio/Geometria-Triangulos.pdf
 		double area = 0.5 * (((a.getX() * b.getY()) - (a.getY() * b.getX())) + ((a.getY() * c.getX()) - (a.getX() * c.getY())) + ((b.getX() * c.getY()) - (b.getY() * c.getX())));
 		return Math.abs(area);
 	}
 
+	/**
+	 * Retorna o ponto de intersecção entre as retas KL e MN.
+	 * 
+	 * @param k
+	 * @param l
+	 * @param m
+	 * @param n
+	 * @return
+	 */
 	public static Ponto getInterseccaoRetas(Ponto k, Ponto l, Ponto m, Ponto n) {
 		float det = (n.getX() - m.getX()) * (l.getY() - k.getY()) - (n.getY() - m.getY()) * (l.getX() - k.getX());
 		float s = ((n.getX() - m.getX()) * (m.getY() - k.getY()) - (n.getY() - m.getY()) * (m.getX() - k.getX())) / det;
