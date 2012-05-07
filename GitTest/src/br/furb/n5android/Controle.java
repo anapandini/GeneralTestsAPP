@@ -8,16 +8,16 @@ import java.util.Map;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLES10;
-import br.furb.portal.api.PortalAPI;
-import br.furb.portal.api.PortalAPI_Enums;
-import br.furb.portal.api.PortalAPI_Utils;
-import br.furb.portal.api.model.Camera;
-import br.furb.portal.api.model.Divisao;
-import br.furb.portal.api.model.Frustum;
-import br.furb.portal.api.model.Ponto;
-import br.furb.portal.api.model.PontoInteresse;
-import br.furb.portal.api.model.Sala;
-import br.furb.portal.api.model.TipoDivisao;
+import br.furb.portais.PortalAPI;
+import br.furb.portais.constantes.PortalAPI_Enums;
+import br.furb.portais.modelo.Camera;
+import br.furb.portais.modelo.Divisao;
+import br.furb.portais.modelo.Frustum;
+import br.furb.portais.modelo.Ponto;
+import br.furb.portais.modelo.PontoInteresse;
+import br.furb.portais.modelo.Sala;
+import br.furb.portais.modelo.TipoDivisao;
+import br.furb.portais.util.PortalAPI_Utils;
 
 /**
  * Trabalho de Conclusão de Curso II
@@ -51,7 +51,7 @@ public class Controle {
 		initPontosInteresse2();
 		this.anguloVisao = 180.0f;
 		this.deslocamentoObservador = 0.1f;
-		this.camera = new Camera(-0.1f, -0.1f, gl, getSalaPorId(3));
+		this.camera = new Camera(-0.1f, -0.1f, getSalaPorId(3));
 		this.frustum = new Frustum(camera, anguloVisao, 10.0f, 0.6f);
 		this.frustumsAuxiliares = new ArrayList<Frustum>();
 
@@ -65,6 +65,7 @@ public class Controle {
 		float novoXCamera = PortalAPI_Utils.retornaX(camera.getX(), anguloVisao, deslocamentoObservador);
 		float novoYCamera = PortalAPI_Utils.retornaY(camera.getY(), anguloVisao, deslocamentoObservador);
 
+		// Faz a chamada da biblioteca que
 		portalAPI.moverCamera(camera, novoXCamera, novoYCamera, pontosInteresse, salas, frustum);
 
 		verificaPontosInteresse();
@@ -111,7 +112,8 @@ public class Controle {
 	 * Altera a direção do campo de visão do observador
 	 */
 	public void rotacionaFrustumCima() {
-		this.frustum.mover(PortalAPI_Enums.ROTACIONAR_FRUSTUM_ANTIHORARIO);
+		// this.frustum.mover(PortalAPI_Enums.ROTACIONAR_FRUSTUM_ANTIHORARIO);
+
 		this.anguloVisao = frustum.getAngulo();
 		verificaPontosInteresse();
 	}
@@ -129,24 +131,26 @@ public class Controle {
 	 */
 	// private void initPontosInteresse() {
 	// pontosInteresse = new ArrayList<PontoInteresse>();
-	// pontosInteresse.add(new PontoInteresse(-0.5f, -0.25f, gl, getSalaPorId(1)));
-	// pontosInteresse.add(new PontoInteresse(0.9f, 0.9f, gl, getSalaPorId(2)));
-	// pontosInteresse.add(new PontoInteresse(0.2f, 0.2f, gl, getSalaPorId(2)));
-	// pontosInteresse.add(new PontoInteresse(-0.8f, -0.75f, gl, getSalaPorId(1)));
+	// pontosInteresse.add(new PontoInteresse(-0.5f, -0.25f, getSalaPorId(1)));
+	// pontosInteresse.add(new PontoInteresse(0.9f, 0.9f, getSalaPorId(2)));
+	// pontosInteresse.add(new PontoInteresse(0.2f, 0.2f, getSalaPorId(2)));
+	// pontosInteresse.add(new PontoInteresse(-0.8f, -0.75f, getSalaPorId(1)));
 	// }
 
 	/**
 	 * Inicializa as coordenadas dos pontos de interesse para o ambiente 2.
 	 */
 	private void initPontosInteresse2() {
+		// Inicializa uma lista para guardar os pontos de interesse
 		pontosInteresse = new ArrayList<PontoInteresse>();
-		pontosInteresse.add(new PontoInteresse(-0.7f, 0.5f, gl, getSalaPorId(2)));
-		pontosInteresse.add(new PontoInteresse(0.1f, 0.8f, gl, getSalaPorId(2)));
-		pontosInteresse.add(new PontoInteresse(0.1f, 0.1f, gl, getSalaPorId(2)));
-		pontosInteresse.add(new PontoInteresse(0.5f, 0.3f, gl, getSalaPorId(1)));
-		pontosInteresse.add(new PontoInteresse(0.6f, -0.6f, gl, getSalaPorId(1)));
-		pontosInteresse.add(new PontoInteresse(0f, -0.4f, gl, getSalaPorId(3)));
-		pontosInteresse.add(new PontoInteresse(-0.9f, -0.8f, gl, getSalaPorId(3)));
+		// Cria os pontos e guarda na lista, mapeando inclusive qual a sala em que o ponto de interesse está
+		pontosInteresse.add(new PontoInteresse(-0.7f, 0.5f, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(0.1f, 0.8f, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(0.1f, 0.1f, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(0.5f, 0.3f, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(0.6f, -0.6f, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(0f, -0.4f, getSalaPorId(3)));
+		pontosInteresse.add(new PontoInteresse(-0.9f, -0.8f, getSalaPorId(3)));
 	}
 
 	/**
@@ -196,15 +200,25 @@ public class Controle {
 	 * Inicializa as coordenadas para o desenho do ambiente 1.
 	 */
 	private void initSalas2() {
+		// Inicializa um mapa de identificadores e salas
 		salas = new HashMap<Integer, Sala>();
 
+		// Cria uma sala com o identificador
 		Sala sala1 = new Sala(1);
+		// Cria uma divisão
 		Divisao div1 = new Divisao(new Ponto(1, 1, sala1), new Ponto(1, -1, sala1), TipoDivisao.PAREDE);
+		// Liga a divisão na sala
 		sala1.addDivisao(div1);
+		// Cria divisões até que a sala esteja completa...
 		div1 = new Divisao(new Ponto(1, -1, sala1), new Ponto(0.2f, -1, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div1);
+		// Cria uma divisão do tipo PORTAL, armazenando em um objeto separado
+		// Pois será necessário mais adiante
 		Divisao portal1Sala1 = new Divisao(new Ponto(0.2f, -1, sala1), new Ponto(0.2f, -0.75f, sala1), TipoDivisao.PORTAL);
+		// Liga também esta divisão na sala
 		sala1.addDivisao(portal1Sala1);
+		// Continua criando as salas (sala2, sala3, ...)
+
 		div1 = new Divisao(new Ponto(0.2f, -0.75f, sala1), new Ponto(0.2f, 0, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div1);
 		div1 = new Divisao(new Ponto(0.2f, 0, sala1), new Ponto(0.4f, 0.5f, sala1), TipoDivisao.PAREDE);
@@ -213,12 +227,14 @@ public class Controle {
 		sala1.addDivisao(portal2Sala1);
 		div1 = new Divisao(new Ponto(0.7f, 0.8f, sala1), new Ponto(1, 1, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div1);
+		// FIM
 
 		Sala sala2 = new Sala(2);
 		Divisao div2 = new Divisao(new Ponto(-1, 1, sala2), new Ponto(1, 1, sala2), TipoDivisao.PAREDE);
 		sala2.addDivisao(div2);
 		div2 = new Divisao(new Ponto(1, 1, sala2), new Ponto(0.7f, 0.8f, sala2), TipoDivisao.PAREDE);
 		sala2.addDivisao(div2);
+		// (...)
 		Divisao portal1Sala2 = new Divisao(new Ponto(0.7f, 0.8f, sala2), new Ponto(0.4f, 0.5f, sala2), TipoDivisao.PORTAL);
 		sala2.addDivisao(portal1Sala2);
 		div2 = new Divisao(new Ponto(0.4f, 0.5f, sala2), new Ponto(0.2f, 0, sala2), TipoDivisao.PAREDE);
@@ -227,10 +243,12 @@ public class Controle {
 		sala2.addDivisao(div2);
 		div2 = new Divisao(new Ponto(-1, 0, sala2), new Ponto(-1, 1, sala2), TipoDivisao.PAREDE);
 		sala2.addDivisao(div2);
+		// fim
 
 		Sala sala3 = new Sala(3);
 		Divisao div3 = new Divisao(new Ponto(-1, 0, sala3), new Ponto(0.2f, 0, sala3), TipoDivisao.PAREDE);
 		sala3.addDivisao(div3);
+		// (...)
 		div3 = new Divisao(new Ponto(0.2f, 0, sala3), new Ponto(0.2f, -0.75f, sala3), TipoDivisao.PAREDE);
 		sala3.addDivisao(div3);
 		Divisao portal1Sala3 = new Divisao(new Ponto(0.2f, -0.75f, sala3), new Ponto(0.2f, -1, sala3), TipoDivisao.PORTAL);
@@ -240,9 +258,12 @@ public class Controle {
 		div3 = new Divisao(new Ponto(-1, -1, sala3), new Ponto(-1, 0, sala3), TipoDivisao.PAREDE);
 		sala3.addDivisao(div3);
 
+		// Para cada divisão do tipo PORTAL indica qual a sala de origem e destino
+		// Ou seja, indica quais salas são ligadas pelo portal
 		portal1Sala1.setSalaOrigem(sala1);
 		portal1Sala1.setSalaDestino(sala3);
 
+		// (...)
 		portal2Sala1.setSalaOrigem(sala1);
 		portal2Sala1.setSalaDestino(sala2);
 
@@ -252,6 +273,7 @@ public class Controle {
 		portal1Sala3.setSalaOrigem(sala3);
 		portal1Sala3.setSalaDestino(sala1);
 
+		// Por fim, adiciona todas as salas criadas no mapa de salas, utilizando como chave o identificador
 		salas.put(sala1.getIdentificadorSala(), sala1);
 		salas.put(sala2.getIdentificadorSala(), sala2);
 		salas.put(sala3.getIdentificadorSala(), sala3);
