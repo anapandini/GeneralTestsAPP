@@ -1,4 +1,4 @@
-package br.furb.n5android.view;
+package br.furb.portais.aplicacao.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

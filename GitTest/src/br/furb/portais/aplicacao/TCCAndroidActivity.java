@@ -1,8 +1,8 @@
-package br.furb.n5android;
+package br.furb.portais.aplicacao;
 
 import android.app.Activity;
 import android.os.Bundle;
-import br.furb.n5android.view.TCCSurfaceView;
+import br.furb.portais.aplicacao.view.TCCSurfaceView;
 
 /**
  * Trabalho de Conclusão de Curso II

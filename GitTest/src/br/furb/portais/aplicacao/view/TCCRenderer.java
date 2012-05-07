@@ -1,4 +1,4 @@
-package br.furb.n5android.view;
+package br.furb.portais.aplicacao.view;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -6,7 +6,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLES10;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import br.furb.n5android.Controle;
+import br.furb.portais.aplicacao.Controle;
 
 /**
  * Trabalho de Conclusão de Curso II

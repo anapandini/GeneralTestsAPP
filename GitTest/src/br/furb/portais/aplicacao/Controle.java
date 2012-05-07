@@ -1,4 +1,4 @@
-package br.furb.n5android;
+package br.furb.portais.aplicacao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLES10;
 import br.furb.portais.PortalAPI;
+import br.furb.portais.aplicacao.util.LeitorAmbientes;
 import br.furb.portais.constantes.PortalAPI_Enums;
 import br.furb.portais.modelo.Camera;
 import br.furb.portais.modelo.Divisao;
@@ -277,6 +278,22 @@ public class Controle {
 		salas.put(sala1.getIdentificadorSala(), sala1);
 		salas.put(sala2.getIdentificadorSala(), sala2);
 		salas.put(sala3.getIdentificadorSala(), sala3);
+	}
+
+	public void carregaSalasXML(String arquivo) {
+		if (arquivo == null) {
+			arquivo = "src/br/furb/portais/aplicacao/util/Ambiente.xml";
+		}
+
+		try {
+			Ambiente ambiente = LeitorAmbientes.readXmlFile(arquivo);
+			for (Sala salaAmbiente : ambiente.getSalas()) {
+				this.salas.put(salaAmbiente.getIdentificadorSala(), salaAmbiente);
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
