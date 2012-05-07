@@ -1,0 +1,24 @@
+<object-stream>
+	<Ambiente>
+		<Sala identificadorSala="1">
+			<Divisao tipo="PAREDE">
+				<pontoOrigem x="1" y="1">
+					<sala identificadorSala="1" />
+				</pontoOrigem>
+				<pontoDestino x="1" y="1">
+					<sala identificadorSala="1" />
+				</pontoDestino>
+			</Divisao>
+		</Sala>
+		<Sala identificadorSala="2">
+			<Divisao tipo="PAREDE">
+				<pontoOrigem x="1" y="1">
+					<sala identificadorSala="2" />
+				</pontoOrigem>
+				<pontoDestino x="1" y="1">
+					<sala identificadorSala="2" />
+				</pontoDestino>
+			</Divisao>
+		</Sala>
+	</Ambiente>
+</object-stream>
