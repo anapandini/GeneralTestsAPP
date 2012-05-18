@@ -79,4 +79,8 @@ public class TCCRenderer implements GLSurfaceView.Renderer {
 		controle.moverCamera();
 	}
 
+	public void finalizarProcessos() {
+		controle.finalizarProcessos();
+	}
+
 }

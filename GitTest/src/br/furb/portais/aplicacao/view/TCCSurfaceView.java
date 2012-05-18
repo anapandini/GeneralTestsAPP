@@ -64,4 +64,10 @@ public class TCCSurfaceView extends GLSurfaceView {
 
 		return true;
 	}
+
+	public void onPause() {
+		renderer.finalizarProcessos();
+		super.onPause();
+	}
+
 }

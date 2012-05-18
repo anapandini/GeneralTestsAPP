@@ -48,6 +48,7 @@ public class Controle {
 	 */
 	public Controle(GL10 gl) {
 		this.gl = gl;
+		// carregaSalasXML("Ambiente.xml");
 		initSalas2();
 		initPontosInteresse2();
 		this.anguloVisao = 180.0f;
@@ -281,8 +282,10 @@ public class Controle {
 	}
 
 	public void carregaSalasXML(String arquivo) {
+
 		if (arquivo == null) {
-			arquivo = "src/br/furb/portais/aplicacao/util/Ambiente.xml";
+			// arquivo = "src/br/furb/portais/aplicacao/util/Ambiente.xml";
+			arquivo = "file:///android_asset/Ambiente.xml";
 		}
 
 		try {
@@ -369,6 +372,10 @@ public class Controle {
 			throw new IllegalArgumentException("Não existe sala com o identificador passado pelo parâmetro.");
 		}
 		return sala;
+	}
+
+	public void finalizarProcessos() {
+		portalAPI.encerrarProcessos();
 	}
 
 }
