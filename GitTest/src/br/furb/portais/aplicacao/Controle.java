@@ -50,7 +50,7 @@ public class Controle {
 		this.gl = gl;
 		// carregaSalasXML("Ambiente.xml");
 		initSalas3();
-		initPontosInteresse2();
+		initPontosInteresse3();
 		this.anguloVisao = 180.0f;
 		this.deslocamentoObservador = 0.1f;
 		this.camera = new Camera(-0.1f, -0.1f, getSalaPorId(6));
@@ -141,17 +141,95 @@ public class Controle {
 	/**
 	 * Inicializa as coordenadas dos pontos de interesse para o ambiente 2.
 	 */
-	private void initPontosInteresse2() {
-		// Inicializa uma lista para guardar os pontos de interesse
+	// private void initPontosInteresse2() {
+	// // Inicializa uma lista para guardar os pontos de interesse
+	// pontosInteresse = new ArrayList<PontoInteresse>();
+	// // Cria os pontos e guarda na lista, mapeando inclusive qual a sala em que o ponto de interesse está
+	// pontosInteresse.add(new PontoInteresse(-0.7f, 0.5f, getSalaPorId(2)));
+	// pontosInteresse.add(new PontoInteresse(0.1f, 0.8f, getSalaPorId(2)));
+	// pontosInteresse.add(new PontoInteresse(0.1f, 0.1f, getSalaPorId(2)));
+	// pontosInteresse.add(new PontoInteresse(0.5f, 0.3f, getSalaPorId(1)));
+	// pontosInteresse.add(new PontoInteresse(0.6f, -0.6f, getSalaPorId(1)));
+	// pontosInteresse.add(new PontoInteresse(0f, -0.4f, getSalaPorId(3)));
+	// pontosInteresse.add(new PontoInteresse(-0.9f, -0.8f, getSalaPorId(3)));
+	// }
+
+	private void initPontosInteresse3() {
 		pontosInteresse = new ArrayList<PontoInteresse>();
-		// Cria os pontos e guarda na lista, mapeando inclusive qual a sala em que o ponto de interesse está
-		// pontosInteresse.add(new PontoInteresse(-0.7f, 0.5f, getSalaPorId(2)));
-		// pontosInteresse.add(new PontoInteresse(0.1f, 0.8f, getSalaPorId(2)));
-		// pontosInteresse.add(new PontoInteresse(0.1f, 0.1f, getSalaPorId(2)));
-		// pontosInteresse.add(new PontoInteresse(0.5f, 0.3f, getSalaPorId(1)));
-		// pontosInteresse.add(new PontoInteresse(0.6f, -0.6f, getSalaPorId(1)));
-		// pontosInteresse.add(new PontoInteresse(0f, -0.4f, getSalaPorId(3)));
-		// pontosInteresse.add(new PontoInteresse(-0.9f, -0.8f, getSalaPorId(3)));
+
+		// Sala 1
+		pontosInteresse.add(new PontoInteresse(-0.7f, -0.2f, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(-0.8f, -0.5f, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(-0.9f, -0.3f, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(-0.7f, -0.45f, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(-0.8f, -0.1f, getSalaPorId(1)));
+		pontosInteresse.add(new PontoInteresse(-0.9f, 0, getSalaPorId(1)));
+
+		// Sala 2
+		pontosInteresse.add(new PontoInteresse(-0.5f, -0.9f, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(-0.1f, -0.8f, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(-0.4f, -0.5f, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(0, -0.5f, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(-0.3f, -0.65f, getSalaPorId(2)));
+		pontosInteresse.add(new PontoInteresse(0.2f, -0.6f, getSalaPorId(2)));
+
+		// Sala 3
+		pontosInteresse.add(new PontoInteresse(0.4f, -0.7f, getSalaPorId(3)));
+		pontosInteresse.add(new PontoInteresse(0.6f, -0.9f, getSalaPorId(3)));
+		pontosInteresse.add(new PontoInteresse(0.6f, -0.8f, getSalaPorId(3)));
+		pontosInteresse.add(new PontoInteresse(0.7f, -0.9f, getSalaPorId(3)));
+		pontosInteresse.add(new PontoInteresse(0.9f, -0.9f, getSalaPorId(3)));
+		pontosInteresse.add(new PontoInteresse(0.8f, -0.7f, getSalaPorId(3)));
+
+		// Sala 4
+		pontosInteresse.add(new PontoInteresse(0.4f, 0.4f, getSalaPorId(4)));
+		pontosInteresse.add(new PontoInteresse(0.5f, 0.2f, getSalaPorId(4)));
+		pontosInteresse.add(new PontoInteresse(0.6f, 0, getSalaPorId(4)));
+		pontosInteresse.add(new PontoInteresse(0.4f, -0.3f, getSalaPorId(4)));
+		pontosInteresse.add(new PontoInteresse(0.55f, -0.5f, getSalaPorId(4)));
+		pontosInteresse.add(new PontoInteresse(0.6f, 0.25f, getSalaPorId(4)));
+
+		// Sala 5
+		pontosInteresse.add(new PontoInteresse(0.75f, -0.5f, getSalaPorId(5)));
+		pontosInteresse.add(new PontoInteresse(0.8f, 0.4f, getSalaPorId(5)));
+		pontosInteresse.add(new PontoInteresse(0.9f, -0.4f, getSalaPorId(5)));
+		pontosInteresse.add(new PontoInteresse(0.93f, 0.3f, getSalaPorId(5)));
+		pontosInteresse.add(new PontoInteresse(0.82f, -0.2f, getSalaPorId(5)));
+		pontosInteresse.add(new PontoInteresse(0.8f, 0, getSalaPorId(5)));
+
+		// Sala 6
+		pontosInteresse.add(new PontoInteresse(-0.5f, -0.3f, getSalaPorId(6)));
+		pontosInteresse.add(new PontoInteresse(-0.4f, 0.4f, getSalaPorId(6)));
+		pontosInteresse.add(new PontoInteresse(-0.3f, -0.2f, getSalaPorId(6)));
+		pontosInteresse.add(new PontoInteresse(-0.2f, 0.3f, getSalaPorId(6)));
+		pontosInteresse.add(new PontoInteresse(-0.1f, -0.1f, getSalaPorId(6)));
+		pontosInteresse.add(new PontoInteresse(0, 0.2f, getSalaPorId(6)));
+		pontosInteresse.add(new PontoInteresse(0.1f, 0, getSalaPorId(6)));
+		pontosInteresse.add(new PontoInteresse(0.2f, 0.1f, getSalaPorId(6)));
+
+		// Sala 7
+		pontosInteresse.add(new PontoInteresse(0.98f, 0.9f, getSalaPorId(7)));
+		pontosInteresse.add(new PontoInteresse(0.9f, 0.8f, getSalaPorId(7)));
+		pontosInteresse.add(new PontoInteresse(0.8f, 0.8f, getSalaPorId(7)));
+		pontosInteresse.add(new PontoInteresse(0.8f, 0.7f, getSalaPorId(7)));
+		pontosInteresse.add(new PontoInteresse(0.3f, 0.52f, getSalaPorId(7)));
+		pontosInteresse.add(new PontoInteresse(0.2f, 0.5125f, getSalaPorId(7)));
+
+		// Sala 8
+		pontosInteresse.add(new PontoInteresse(-0.6f, 0.6f, getSalaPorId(8)));
+		pontosInteresse.add(new PontoInteresse(-0.5f, 0.8f, getSalaPorId(8)));
+		pontosInteresse.add(new PontoInteresse(-0.3f, 0.7f, getSalaPorId(8)));
+		pontosInteresse.add(new PontoInteresse(-0.1f, 0.9f, getSalaPorId(8)));
+		pontosInteresse.add(new PontoInteresse(0.1f, 0.8125f, getSalaPorId(8)));
+		pontosInteresse.add(new PontoInteresse(0.4f, 0.81f, getSalaPorId(8)));
+
+		// Sala 9
+		pontosInteresse.add(new PontoInteresse(-0.9f, 0.9f, getSalaPorId(9)));
+		pontosInteresse.add(new PontoInteresse(-0.7f, 0.7f, getSalaPorId(9)));
+		pontosInteresse.add(new PontoInteresse(-0.8f, 0.7f, getSalaPorId(9)));
+		pontosInteresse.add(new PontoInteresse(-0.8f, 0.3f, getSalaPorId(9)));
+		pontosInteresse.add(new PontoInteresse(-0.7f, 0.15f, getSalaPorId(9)));
+		pontosInteresse.add(new PontoInteresse(-0.9f, 0.2f, getSalaPorId(9)));
 	}
 
 	/**
@@ -323,10 +401,10 @@ public class Controle {
 		div2 = new Divisao(new Ponto(-0.6f, -0.7f, sala2), new Ponto(-0.6f, -0.4f, sala2), TipoDivisao.PAREDE);
 		sala2.addDivisao(div2);
 
-		div2 = new Divisao(new Ponto(-0.6f, -0.4f, sala2), new Ponto(-0.1f, -0.4f, sala2), TipoDivisao.PAREDE);
+		div2 = new Divisao(new Ponto(-0.6f, -0.4f, sala2), new Ponto(-0.2f, -0.4f, sala2), TipoDivisao.PAREDE);
 		sala2.addDivisao(div2);
 
-		Divisao portal5Sala2 = new Divisao(new Ponto(-0.1f, -0.4f, sala2), new Ponto(0.1f, -0.4f, sala2), TipoDivisao.PORTAL);
+		Divisao portal5Sala2 = new Divisao(new Ponto(-0.2f, -0.4f, sala2), new Ponto(0.1f, -0.4f, sala2), TipoDivisao.PORTAL);
 		sala2.addDivisao(portal5Sala2);
 
 		div2 = new Divisao(new Ponto(0.1f, -0.4f, sala2), new Ponto(0.3f, -0.4f, sala2), TipoDivisao.PAREDE);
@@ -367,9 +445,6 @@ public class Controle {
 		Divisao portal8Sala3 = new Divisao(new Ponto(0.8f, -0.6f, sala3), new Ponto(1, -0.6f, sala3), TipoDivisao.PORTAL);
 		sala3.addDivisao(portal8Sala3);
 
-		div3 = new Divisao(new Ponto(1, -0.6f, sala3), new Ponto(1, -0.6f, sala3), TipoDivisao.PAREDE);
-		sala3.addDivisao(div3);
-
 		div3 = new Divisao(new Ponto(1, -0.6f, sala3), new Ponto(1, -1, sala3), TipoDivisao.PAREDE);
 		sala3.addDivisao(div3);
 
@@ -407,13 +482,10 @@ public class Controle {
 
 		// Sala 5
 		Sala sala5 = new Sala(5);
-		Divisao div5 = new Divisao(new Ponto(1, -0.6f, sala5), new Ponto(1, -0.6f, sala5), TipoDivisao.PAREDE);
-		sala5.addDivisao(div5);
-
 		Divisao portal8Sala5 = new Divisao(new Ponto(1, -0.6f, sala5), new Ponto(0.8f, -0.6f, sala5), TipoDivisao.PORTAL);
 		sala5.addDivisao(portal8Sala5);
 
-		div5 = new Divisao(new Ponto(0.8f, -0.6f, sala5), new Ponto(0.7f, -0.6f, sala5), TipoDivisao.PAREDE);
+		Divisao div5 = new Divisao(new Ponto(0.8f, -0.6f, sala5), new Ponto(0.7f, -0.6f, sala5), TipoDivisao.PAREDE);
 		sala5.addDivisao(div5);
 
 		div5 = new Divisao(new Ponto(0.7f, -0.6f, sala5), new Ponto(0.7f, 0.1f, sala5), TipoDivisao.PAREDE);
@@ -436,10 +508,10 @@ public class Controle {
 		Divisao div6 = new Divisao(new Ponto(0.3f, -0.4f, sala6), new Ponto(0.1f, -0.4f, sala6), TipoDivisao.PAREDE);
 		sala6.addDivisao(div6);
 
-		Divisao portal5Sala6 = new Divisao(new Ponto(0.1f, -0.4f, sala6), new Ponto(-0.1f, -0.4f, sala6), TipoDivisao.PORTAL);
+		Divisao portal5Sala6 = new Divisao(new Ponto(0.1f, -0.4f, sala6), new Ponto(-0.2f, -0.4f, sala6), TipoDivisao.PORTAL);
 		sala6.addDivisao(portal5Sala6);
 
-		div6 = new Divisao(new Ponto(-0.1f, -0.4f, sala6), new Ponto(-0.6f, -0.4f, sala6), TipoDivisao.PAREDE);
+		div6 = new Divisao(new Ponto(-0.2f, -0.4f, sala6), new Ponto(-0.6f, -0.4f, sala6), TipoDivisao.PAREDE);
 		sala6.addDivisao(div6);
 
 		div6 = new Divisao(new Ponto(-0.6f, -0.4f, sala6), new Ponto(-0.6f, 0.5f, sala6), TipoDivisao.PAREDE);
@@ -456,9 +528,6 @@ public class Controle {
 
 		Divisao portal10Sala6 = new Divisao(new Ponto(0.1f, 0.5f, sala6), new Ponto(0.3f, 0.5f, sala6), TipoDivisao.PORTAL);
 		sala6.addDivisao(portal10Sala6);
-
-		div6 = new Divisao(new Ponto(0.3f, 0.5f, sala6), new Ponto(0.3f, 0.5f, sala6), TipoDivisao.PAREDE);
-		sala6.addDivisao(div6);
 
 		div6 = new Divisao(new Ponto(0.3f, 0.5f, sala6), new Ponto(0.3f, 0, sala6), TipoDivisao.PAREDE);
 		sala6.addDivisao(div6);
