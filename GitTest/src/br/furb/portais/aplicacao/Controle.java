@@ -47,7 +47,7 @@ public class Controle {
 	public Controle(GL10 gl) {
 		this.gl = gl;
 		AmbientesUtil ambienteUtil = new AmbientesUtil();
-		ambienteUtil.ambienteTeste01();
+		ambienteUtil.ambienteTeste02();
 		this.salas = ambienteUtil.getSalas();
 		this.pontosInteresse = ambienteUtil.getPontosInteresse();
 		this.anguloVisao = 180.0f;
