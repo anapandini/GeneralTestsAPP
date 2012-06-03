@@ -734,7 +734,7 @@ public class AmbientesUtil {
 		Divisao portal1Sala1 = new Divisao(new Ponto(-0.6f, -0.7f, sala1), new Ponto(-0.6f, -0.9f, sala1), TipoDivisao.PORTAL);
 		sala1.addDivisao(portal1Sala1);
 
-		div1 = new Divisao(new Ponto(-0.6f, -0.9f, sala1), new Ponto(-0.6f, -1, sala1), TipoDivisao.PORTAL);
+		div1 = new Divisao(new Ponto(-0.6f, -0.9f, sala1), new Ponto(-0.6f, -1, sala1), TipoDivisao.PAREDE);
 		sala1.addDivisao(div1);
 
 		// Sala 2
@@ -1093,7 +1093,7 @@ public class AmbientesUtil {
 		Divisao portal1Sala2 = new Divisao(new Ponto(-0.6f, -0.9f, sala2), new Ponto(-0.6f, -0.7f, sala2), TipoDivisao.PORTAL);
 		sala2.addDivisao(portal1Sala2);
 
-		div2 = new Divisao(new Ponto(-0.6f, -0.7f, sala2), new Ponto(-0.6f, 0.3f, sala2), TipoDivisao.PAREDE);
+		div2 = new Divisao(new Ponto(-0.6f, -0.7f, sala2), new Ponto(-0.6f, 0.5f, sala2), TipoDivisao.PAREDE);
 		sala2.addDivisao(div2);
 
 		div2 = new Divisao(new Ponto(-0.6f, 0.5f, sala2), new Ponto(-0.5f, 0.5f, sala2), TipoDivisao.PAREDE);
@@ -1118,7 +1118,7 @@ public class AmbientesUtil {
 		sala2.addDivisao(div2);
 
 		Divisao portal2Sala2 = new Divisao(new Ponto(0.3f, -0.8f, sala2), new Ponto(0.3f, -0.9f, sala2), TipoDivisao.PORTAL);
-		sala2.addDivisao(div2);
+		sala2.addDivisao(portal2Sala2);
 
 		div2 = new Divisao(new Ponto(0.3f, -0.9f, sala2), new Ponto(0.3f, -1, sala2), TipoDivisao.PAREDE);
 		sala2.addDivisao(div2);
@@ -1172,7 +1172,7 @@ public class AmbientesUtil {
 		Divisao portal5Sala4 = new Divisao(new Ponto(0.3f, -0.2f, sala4), new Ponto(0.3f, 0, sala4), TipoDivisao.PORTAL);
 		sala4.addDivisao(portal5Sala4);
 
-		div4 = new Divisao(new Ponto(0.3f, 0, sala4), new Ponto(0.3f, 0.3f, sala4), TipoDivisao.PAREDE);
+		div4 = new Divisao(new Ponto(0.3f, 0, sala4), new Ponto(0.3f, 0.5f, sala4), TipoDivisao.PAREDE);
 		sala4.addDivisao(div4);
 
 		div4 = new Divisao(new Ponto(0.3f, 0.5f, sala4), new Ponto(1, 0.5f, sala4), TipoDivisao.PAREDE);
@@ -1232,7 +1232,7 @@ public class AmbientesUtil {
 		portal4Sala3.setSalaOrigem(sala3);
 		portal4Sala3.setSalaDestino(sala4);
 		portal4Sala4.setSalaOrigem(sala4);
-		portal3Sala4.setSalaDestino(sala3);
+		portal4Sala4.setSalaDestino(sala3);
 
 		portal5Sala2.setSalaOrigem(sala2);
 		portal5Sala2.setSalaDestino(sala4);

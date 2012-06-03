@@ -63,7 +63,7 @@ public class TCCSurfaceView extends GLSurfaceView {
 				frustumCima(32);
 				mover(2);
 				frustumCima(40);
-				mover(7);
+				mover(6);
 				frustumCima(7);
 				mover(1);
 				frustumCima(8);
