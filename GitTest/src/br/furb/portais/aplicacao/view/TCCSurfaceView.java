@@ -147,22 +147,37 @@ public class TCCSurfaceView extends GLSurfaceView {
 	private void mover(int quantidade) {
 		for (int i = 0; i < quantidade; i++) {
 			renderer.moverCamera();
+			requestRender();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		requestRender();
 	}
 
 	private void frustumCima(int quantidade) {
 		for (int i = 0; i < quantidade; i++) {
 			renderer.rotacionaFrustumParaCima();
+			requestRender();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		requestRender();
 	}
 
 	private void frustumBaixo(int quantidade) {
 		for (int i = 0; i < quantidade; i++) {
 			renderer.rotacionaFrustumParaBaixo();
+			requestRender();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		requestRender();
 	}
 
 	public void onPause() {
